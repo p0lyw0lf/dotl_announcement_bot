@@ -16,7 +16,7 @@ bot = Bot(client)
 bot.schedule_periodic(
     bot.check_rss_factory(
         "http://www.daughterofthelilies.com/rss.php",
-        "281960431738683396",
+        "370421266735169537",
         "Hey @everyone! A new page just went up: %%%. Enjoy :3"
     ),
     30 * 60,
@@ -38,6 +38,7 @@ async def on_message(message):
     # response should be an Embed
     response = await bot.parse(message)
     output = bot.format_embed(message.author, response)
+    #print(message.channel.id, message.channel.name)
     if output is not None:
         if bot.is_yes(bot.db[message.author.id, "delete_command"]):
             try:

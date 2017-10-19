@@ -3,10 +3,26 @@ from discord import Forbidden
 from discord.errors import NotFound
 import asyncio
 from command_parser import Parser
+from command_scheduler import Scheduler
 
 client = discord.Client()
 
-main_parser = Parser(client)
+class Bot(Parser, Scheduler):
+    def __init__(self, client):
+        super().__init__(client)
+    
+
+bot = Bot(client)
+bot.schedule_periodic(
+    bot.check_rss_factory(
+        "http://www.daughterofthelilies.com/rss.php",
+        111111111,
+        "Hey @everybody! A new page just went up: %%%. Enjoy :3"
+    ),
+    30 * 60,
+    0
+)
+bot.start_task(0)
 
 @client.event
 async def on_ready():

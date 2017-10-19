@@ -16,29 +16,31 @@ bot = Bot(client)
 bot.schedule_periodic(
     bot.check_rss_factory(
         "http://www.daughterofthelilies.com/rss.php",
-        111111111,
-        "Hey @everybody! A new page just went up: %%%. Enjoy :3"
+        "281960431738683396",
+        "This is a test message"
+        #"Hey @everybody! A new page just went up: %%%. Enjoy :3"
     ),
     30 * 60,
     0
 )
-bot.start_task(0)
 
 @client.event
 async def on_ready():
+    print('------')
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
     print('------')
+    await bot.start_task(0)
+    print("Started all tasks")
 
 @client.event
 async def on_message(message):
-    print(message.channel)
     # response should be an Embed
-    response = await main_parser.parse(message)
-    output = main_parser.format_embed(message.author, response)
+    response = await bot.parse(message)
+    output = bot.format_embed(message.author, response)
     if output is not None:
-        if main_parser.is_yes(main_parser.db[message.author.id, "delete_command"]):
+        if bot.is_yes(bot.db[message.author.id, "delete_command"]):
             try:
                 await client.delete_message(message)
             except (Forbidden, NotFound):
@@ -48,8 +50,9 @@ async def on_message(message):
         # If this is turned on and you still don't want it
         # deleted, just make main_parser send it from
         # within a method instead of returning something
-        if main_parser.is_yes(main_parser.db[message.author.id, "delete_response"]):
-            asyncio.ensure_future(main_parser.wait_then_delete(rspmsg, message.author))
+        if bot.is_yes(bot.db[message.author.id, "delete_response"]):
+            asyncio.ensure_future(bot.wait_then_delete(rspmsg, message.author))
 
 with open('oauth2.tok') as file:
+    print("Starting...")
     client.run(file.read())

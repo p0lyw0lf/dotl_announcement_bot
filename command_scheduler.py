@@ -20,6 +20,7 @@ class Scheduler(RSSChecker):
     async def start_task(self, taskid):
         if taskid in self.task_running and not self.task_running[taskid]:
             self.task_running[taskid] = True
+            print("Task started")
             self.task_list[taskid] = asyncio.ensure_future(self.run_task(taskid))
 
     async def stop_task(self, taskid):
@@ -31,5 +32,6 @@ class Scheduler(RSSChecker):
 
     async def run_task(self, taskid):
         while True:
-            self.task_func[taskid]()
+            print("Function called")
+            await self.task_func[taskid]()
             await asyncio.sleep(self.task_wait[taskid])

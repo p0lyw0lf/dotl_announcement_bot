@@ -17,8 +17,7 @@ bot.schedule_periodic(
     bot.check_rss_factory(
         "http://www.daughterofthelilies.com/rss.php",
         "281960431738683396",
-        "This is a test message"
-        #"Hey @everybody! A new page just went up: %%%. Enjoy :3"
+        "Hey @everyone! A new page just went up: %%%. Enjoy :3"
     ),
     30 * 60,
     0

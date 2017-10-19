@@ -33,6 +33,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    print(message.channel)
     # response should be an Embed
     response = await main_parser.parse(message)
     output = main_parser.format_embed(message.author, response)

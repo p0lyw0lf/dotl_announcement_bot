@@ -7,10 +7,10 @@ class DiceCommands(VariableCommands):
         super().__init__(client)
         self.commands.update({
             "roll":
-                {"args": ["user", "int"], "func", self.roll_dice}
+                {"args": ["user", "int"], "func": self.roll_dice}
         })
 
-    def roll_dice(self, user, dice_size=None):
+    async def roll_dice(self, user, dice_size=None):
         if dice_size is None:
             dice_size = safe_int(self.db[(user.id, "dice", "size")])
         if dice_size < 2:

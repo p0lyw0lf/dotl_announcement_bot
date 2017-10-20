@@ -15,15 +15,13 @@ class HelpCommands(Shell):
     async def get_help(self, user, channel, path=None):
         if path is None:
             path = ["main"]
-        path[-1] += '.json'
+        path[-1] += '.txt'
         data = self.helpdb[tuple(path)]
         if data == '':
             return f"Sorry, help for {' '.join(path)} cannot be found"
-        data = json.loads(data)
-        to_return = "**" + data["title"] + "**\n\n" + data["content"]
 
         if channel.is_private:
-            return to_return
+            return data
         else:
-            await self.client.send_message(user, to_return)
+            await self.client.send_message(user, data)
             return "A PM has been sent to you with help"

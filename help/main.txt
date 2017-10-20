@@ -1,0 +1,9 @@
+**Main help**
+
+Welcome to Dotl Bud's help!
+Help sections:
+
+**Using help**: `help help`
+**Variables**: `help variables`
+**Dice**: `help dice`
+**About DotL Bud**: `help about`

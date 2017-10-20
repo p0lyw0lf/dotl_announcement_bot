@@ -1,0 +1,11 @@
+**Help help**
+
+Command format:
+```
+bud!help [args]
+```
+
+`help` arguments:
+```
+ 1-n: A space-separated list of strings determining which help page you wish to access
+```

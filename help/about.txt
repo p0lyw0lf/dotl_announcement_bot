@@ -1,0 +1,8 @@
+**About DotL Bud**
+
+DotL Bud is a Discord bot designed and written by Discord user PolyWolf.
+My primary purpose is to serve the official DotL Discord server.
+
+If you are in the DotL discord server, please PM PolyWolf with any bug reports/feature requests.
+
+Thank you!

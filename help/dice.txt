@@ -1,0 +1,23 @@
+**Dice help**
+
+Now you can simulate dice rolls without leaving the comfort of your discord window!
+
+Variables:
+```
+dice size: Number of faces the dice has. Minimum 2. (Default: 6)
+```
+
+Commands:
+
+To roll a dice:
+```
+bud!roll
+```
+
+Coming eventually: Dice images. 
+Required materials for this to happen:
+ * Coin faces for size 2
+ * Triangle w/ number for size 4
+ * Dots for size 6
+ * That 20-sided dice images
+ * Somewhere to host these images (Discord has a rate-limit for uploading, but not for linking)

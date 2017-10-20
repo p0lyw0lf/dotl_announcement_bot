@@ -37,7 +37,7 @@ class Shell(object):
 
     def format_embed(self, user, response):
         output = Embed()
-        output.color = 0xffffff
+        output.color = 0x0da000
         output.set_author(name=user.display_name, icon_url=user.avatar_url)
         if isinstance(response, str):
             output.description = response

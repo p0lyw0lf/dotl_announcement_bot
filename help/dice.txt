@@ -11,9 +11,13 @@ Commands:
 
 To roll a dice:
 ```
-bud!roll
+bud!roll {size}
 ```
 
+Argument description:
+```
+ 1 (optional): Size of dice to roll. (Default: user dice size)
+```
 Coming eventually: Dice images. 
 Required materials for this to happen:
  * Coin faces for size 2

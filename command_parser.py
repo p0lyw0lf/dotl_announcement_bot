@@ -4,10 +4,11 @@ from discord.errors import NotFound
 import sys
 
 from modules.help import HelpCommands
+from modules.dice import DiceCommands
 from utils import safe_int, safe_float
 
 
-class Parser(HelpCommands):
+class Parser(HelpCommands, DiceCommands):
     # I'm hoping to do NLP someday, but idk what I need to do
     # in order to make compatibility for it...
     def __init__(self, client):

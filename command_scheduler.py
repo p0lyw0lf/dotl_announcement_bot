@@ -4,8 +4,8 @@ import asyncio
 from contextlib import suppress
 
 class Scheduler(RSSChecker):
-    def __init__(self, client):
-        super().__init__(client)
+    def __init__(self, client, *args, **kwargs):
+        super(Scheduler, self).__init__(client, *args, **kwargs)
 
         self.task_list = dict()
         self.task_running = dict()

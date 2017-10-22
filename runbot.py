@@ -4,12 +4,13 @@ from discord.errors import NotFound
 import asyncio
 from command_parser import Parser
 from command_scheduler import Scheduler
+from profanity_filter import ProfanityFilter
 
 client = discord.Client()
 
-class Bot(Parser, Scheduler):
-    def __init__(self, client):
-        super().__init__(client)
+class Bot(Parser, Scheduler, ProfanityFilter):
+    def __init__(self, client, *args, **kwargs):
+        super(Bot, self).__init__(client, *args, **kwargs)
     
 
 bot = Bot(client)
@@ -35,7 +36,20 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    # response should be an Embed
+    
+    filtered = bot.filter(message.content)
+    if filtered:
+        try:
+            await client.delete_message(message)
+            await client.send_message(
+                message.channel,
+                embed=bot.format_embed(message.author, {"You said:": filtered})
+            )
+        except (Forbidden, NotFound):
+            pass
+
+        return
+        
     response = await bot.parse(message)
     output = bot.format_embed(message.author, response)
     #print(message.channel.id, message.channel.name)

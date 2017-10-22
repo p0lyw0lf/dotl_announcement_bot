@@ -1,8 +1,9 @@
 import re
 from discord import Embed
 
-class Shell(object):
-    def __init__(self, client):
+class Shell:
+    def __init__(self, client, *args, **kwargs):
+        super(Shell, self).__init__(self, client, *args, **kwargs)
         self.admins = {'172823011999744001'}
 
         self.special_begin = 'bud!'

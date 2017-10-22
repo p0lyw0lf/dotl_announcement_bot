@@ -8,8 +8,8 @@ import requests
 
 
 class RSSChecker(VariableCommands):
-    def __init__(self, client):
-        super().__init__(client)
+    def __init__(self, client, *args, **kwargs):
+        super(RSSChecker, self).__init__(client, *args, **kwargs)
 
     def check_rss_factory(self, url, channel, message_template):
         

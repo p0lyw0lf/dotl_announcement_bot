@@ -3,8 +3,8 @@ from .shell import Shell
 
 
 class VariableCommands(Shell):
-    def __init__(self, client):
-        super().__init__(client)
+    def __init__(self, client, *args, **kwargs):
+        super().__init__(client, *args, **kwargs)
         self.db = Database('db', 'global')
         self.commands.update({
             "set":

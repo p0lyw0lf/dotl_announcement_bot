@@ -11,8 +11,8 @@ from utils import safe_int, safe_float
 class Parser(HelpCommands, DiceCommands):
     # I'm hoping to do NLP someday, but idk what I need to do
     # in order to make compatibility for it...
-    def __init__(self, client):
-        super().__init__(client)
+    def __init__(self, client, *args, **kwargs):
+        super(Parser, self).__init__(client, *args, **kwargs)
 
     def full_tokenize(self, message):
         message = message[len(self.special_begin):] if message.startswith(self.special_begin) else message

@@ -42,8 +42,10 @@ class ProfanityFilter:
 
         for filter_word in filter_list:
             self.regex_string += "("
-            for char in filter_word:
-                self.regex_string += self.letter2regex[char]
+            self.regex_string += "\\s*".join(map(
+                lambda char: self.letter2regex[char],
+                filter_word
+            ))
             self.regex_string += ")|"
 
         self.regex_string = self.regex_string[:-1] +")\\b"

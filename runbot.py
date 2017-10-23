@@ -18,7 +18,8 @@ bot.schedule_periodic(
     bot.check_rss_factory(
         "http://www.daughterofthelilies.com/rss.php",
         "370421266735169537",
-        "Hey @everyone! A new page just went up: %%%. Enjoy :3"
+        "Hey @everyone! A new page just went up: %%%. Enjoy :3",
+        "dotl"
     ),
     10 * 60,
     0
@@ -28,7 +29,8 @@ bot.schedule_periodic(
     bot.check_rss_factory(
         "http://bludragongal.tumblr.com/rss",
         "370421266735169537",
-        "Hey @everyone! Meg just posted something to tumblr: %%%. Go check it out!"
+        "Hey @everyone! Meg just posted to tumblr: %%%. Go check it out!",
+        "meg"
     ),
     10 * 60,
     1
@@ -38,7 +40,8 @@ bot.schedule_periodic(
     bot.check_rss_factory(
         "http://yokoboo.tumblr.com/rss",
         "370421266735169537",
-        "Hey @everyone! Yoko just posted something to tumblr: %%%. Go check it out!"
+        "Hey @everyone! Yoko just posted to tumblr: %%%. Go check it out!",
+        "yoko"
     ),
     10 * 60,
     2

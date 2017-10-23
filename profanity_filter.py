@@ -1,4 +1,5 @@
 import re
+import random
 
 class ProfanityFilter:
     letter2regex = {
@@ -34,7 +35,7 @@ class ProfanityFilter:
         filter_file = open(kwargs.get('filter_file', "db/bad_word_list"), 'r')
         replace_file = open(kwargs.get('replace_file', "db/bad_word_replace"), 'r')
 
-        filter_list = ["heck"] # filter_file.read().split("\n")
+        filter_list = filter_file.read().split("\n")
         self.replace_list = replace_file.read().split("\n")
 
         self.regex_string = "\\b("
@@ -46,14 +47,14 @@ class ProfanityFilter:
             self.regex_string += ")|"
 
         self.regex_string = self.regex_string[:-1] +")\\b"
-        print(self.regex_string)
         self.regex = re.compile(self.regex_string)
 
-    def random_replace(self):
+    def random_replace(self, *args):
         return random.choice(self.replace_list)
 
     def filter(self, message):
-        print(type(message))
-        match = re.match(self.regex, message)
-        print(message, match)
-        return ""
+        filtered, num_subs = re.subn(self.regex, self.random_replace, message)
+        if num_subs:
+            return filtered
+        else:
+            return False

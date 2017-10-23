@@ -20,8 +20,28 @@ bot.schedule_periodic(
         "370421266735169537",
         "Hey @everyone! A new page just went up: %%%. Enjoy :3"
     ),
-    30 * 60,
+    10 * 60,
     0
+)
+
+bot.schedule_periodic(
+    bot.check_rss_factory(
+        "http://bludragongal.tumblr.com/rss",
+        "370421266735169537",
+        "Hey @everyone! Meg just posted something to tumblr: %%%. Go check it out!"
+    ),
+    10 * 60,
+    1
+)
+
+bot.schedule_periodic(
+    bot.check_rss_factory(
+        "http://yokoboo.tumblr.com/rss",
+        "370421266735169537",
+        "Hey @everyone! Yoko just posted something to tumblr: %%%. Go check it out!"
+    ),
+    10 * 60,
+    2
 )
 
 @client.event
@@ -32,6 +52,8 @@ async def on_ready():
     print(client.user.id)
     print('------')
     await bot.start_task(0)
+    await bot.start_task(1)
+    await bot.start_task(2)
     print("Started all tasks")
 
 @client.event

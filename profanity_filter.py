@@ -21,7 +21,7 @@ class ProfanityFilter:
         'p': "[pP]",
         'q': "[qQ9]",
         'r': "[rR]",
-        's': "[sS$5]",
+        's': "[sS\\$5]",
         't': "[tT7]",
         'u': "[uUvV]",
         'v': "[vVuU]",

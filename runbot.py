@@ -17,7 +17,7 @@ bot = Bot(client)
 bot.schedule_periodic(
     bot.check_rss_factory(
         "http://www.daughterofthelilies.com/rss.php",
-        "370421266735169537",
+        "371963209508192276",
         "Hey @everyone! A new page just went up: %%%. Enjoy :3",
         "dotl"
     ),
@@ -28,7 +28,7 @@ bot.schedule_periodic(
 bot.schedule_periodic(
     bot.check_rss_factory(
         "http://bludragongal.tumblr.com/rss",
-        "370421266735169537",
+        "371963443873447947",
         "Hey @everyone! Meg just posted to tumblr: %%%. Go check it out!",
         "meg"
     ),
@@ -39,7 +39,7 @@ bot.schedule_periodic(
 bot.schedule_periodic(
     bot.check_rss_factory(
         "http://yokoboo.tumblr.com/rss",
-        "370421266735169537",
+        "371963443873447947",
         "Hey @everyone! Yoko just posted to tumblr: %%%. Go check it out!",
         "yoko"
     ),

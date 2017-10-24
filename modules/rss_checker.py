@@ -11,12 +11,21 @@ class RSSChecker(VariableCommands):
     def __init__(self, client, *args, **kwargs):
         super(RSSChecker, self).__init__(client, *args, **kwargs)
 
+    def is_announceable(item):
+        if not item.has_key("tags"): # welp, guess we'll post it
+            return True
+        for tag in item["tags"]:
+            if tag["term"][0:4].upper() == "DOTL":  # catch "dotl fanart", etc
+                return True
+        return False
+
     def check_rss_factory(self, url, channel, message_template, tag):
         dbitem = ("last_link_"+tag,)
         async def check_rss():
             feed = feedparser.parse(url)
             item = feed["items"][0] # Most recent
-            if item["link"] != self.db[dbitem]:
+            # check announceable first, in case tag is added after it's posted
+            if is_announceable(item) and item["link"] != self.db[dbitem]:
                 self.db[dbitem] = item["link"]
                 for channel_obj in self.client.get_all_channels():
                     # Inefficient, but only gets called once every 30 min anyway

@@ -6,8 +6,9 @@ class Database(object):
         self.global_keyword = global_keyword
 
     def __getitem__(self, key):
-        if '..' in key:
-            return ''
+        for part in key:
+            if '.' in part or '/' in part:
+                return ''
         filename = self.file_dir + '/'.join(key)
 
         try:
@@ -33,8 +34,9 @@ class Database(object):
         return value
 
     def __setitem__(self, key, value):
-        if '..' in key:
-            return ''
+        for part in key:
+            if '.' in part or '/' in part:
+                return ''
         filename = self.file_dir + '/'.join(key)
         directory = os.path.dirname(filename)
         if not os.path.exists(directory):

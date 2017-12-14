@@ -4,7 +4,6 @@ from doclite import Database
 
 import feedparser
 import asyncio
-import requests
 
 
 class RSSChecker(VariableCommands):

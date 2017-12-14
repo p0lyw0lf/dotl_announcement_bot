@@ -23,7 +23,7 @@ class VariableCommands(Shell):
                 return "You can't set globals!"
         else:
             self.db[tuple([user.id] + variable)] = value
-        return f"{variable} set to {value}"
+        return "{0} set to {1}".format(variable, value)
 
     async def get_user_data(self, user, variable):
         print(variable)
@@ -35,4 +35,4 @@ class VariableCommands(Shell):
         if not value:
             value = 'None'
 
-        return f"{' '.join(variable)} is currently set to {value}"
+        return "{} is currently set to {}".format(' '.join(variable), value)

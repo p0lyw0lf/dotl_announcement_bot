@@ -5,10 +5,12 @@ import sys
 
 from modules.help import HelpCommands
 from modules.dice import DiceCommands
+from modules.misc import MiscCommands
+from modules.permissions import Permissions
 from utils import safe_int, safe_float
 
 
-class Parser(HelpCommands, DiceCommands):
+class Parser(HelpCommands, DiceCommands, MiscCommands, Permissions):
     # I'm hoping to do NLP someday, but idk what I need to do
     # in order to make compatibility for it...
     def __init__(self, client, *args, **kwargs):
@@ -28,6 +30,9 @@ class Parser(HelpCommands, DiceCommands):
             
             if arg == "user":
                 args.append(user)
+
+            elif arg == "message":
+                args.append(message)
                 
             elif arg == "server":
                 args.append(server)

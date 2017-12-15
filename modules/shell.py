@@ -6,7 +6,7 @@ class Shell:
         super(Shell, self).__init__(self, client, *args, **kwargs)
         self.admins = {'172823011999744001'}
 
-        self.special_begin = 'bud!'
+        self.special_begin = 'b!'
         self.tokenizing_regex = re.compile("([^\s\"']+|\"([^\"]*)\"|'([^']*)')")
         self.commands = dict()
 

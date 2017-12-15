@@ -11,7 +11,7 @@ Commands:
 
 To roll a dice:
 ```
-bud!roll {size}
+b!roll {size}
 ```
 
 Argument description:

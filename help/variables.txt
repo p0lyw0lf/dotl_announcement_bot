@@ -9,7 +9,7 @@ of setting and retrieving variables.
 
 To manually retrieve the value of the variable:
 ```
-bud!get {global} [variable_name]
+b!get {global} [variable_name]
 ```
 
 Argument description:
@@ -20,7 +20,7 @@ Argument description:
 
 To set a variable:
 ```
-bud!set {global} [variable_name] [value]
+b!set {global} [variable_name] [value]
 ```
 
 Argument description:

@@ -26,12 +26,9 @@ class RSSChecker(VariableCommands):
             # check announceable first, in case tag is added after it's posted
             if is_announceable(item) and item["link"] != self.db[dbitem]:
                 self.db[dbitem] = item["link"]
-                for channel_obj in self.client.get_all_channels():
-                    # Inefficient, but only gets called once every 30 min anyway
-                    if channel_obj.id == channel:
-                        await self.send_simple_message(
-                            message_template.replace("%%%", item["link"]),
-                            channel_obj
-                        )
+                await self.send_simple_message(
+                    message_template.replace("%%%", item["link"]),
+                    self.client.get_channel(channel)
+                )
             
         return check_rss

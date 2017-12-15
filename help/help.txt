@@ -2,7 +2,7 @@
 
 Command format:
 ```
-bud!help [args]
+b!help [args]
 ```
 
 `help` arguments:

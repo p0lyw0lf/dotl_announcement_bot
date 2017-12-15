@@ -9,8 +9,7 @@ from modules.misc import MiscCommands
 from modules.permissions import Permissions
 from utils import safe_int, safe_float
 
-
-class Parser(HelpCommands, DiceCommands, MiscCommands, Permissions):
+class Parser(MiscCommands, HelpCommands, DiceCommands, Permissions):
     # I'm hoping to do NLP someday, but idk what I need to do
     # in order to make compatibility for it...
     def __init__(self, client, *args, **kwargs):
@@ -87,11 +86,14 @@ class Parser(HelpCommands, DiceCommands, MiscCommands, Permissions):
                 command, tokens = self.full_tokenize(message)
                 
                 if command in self.commands:
+                    if self.can_run_command(user, server, command):
                     
-                    args = self.get_args(command, tokens, message_obj, user, server, channel)
-                    output = await self.commands[command]["func"](*args)
+                        args = self.get_args(command, tokens, message_obj, user, server, channel)
+                        output = await self.commands[command]["func"](*args)
 
-                    return output
+                        return output
+                    else:
+                        return "You do not have permission to run that command"
 
                 else:
                     return f"The command {message} does not exist."

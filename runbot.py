@@ -8,12 +8,11 @@ from command_scheduler import Scheduler
 from profanity_filter import ProfanityFilter
 
 client = discord.Client()
-log.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=log.DEBUG)
+log.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=log.INFO)
 
 class Bot(Parser, Scheduler, ProfanityFilter):
     def __init__(self, client, *args, **kwargs):
         super(Bot, self).__init__(client, *args, **kwargs)
-    
 
 bot = Bot(client)
 bot.schedule_periodic(
@@ -60,6 +59,8 @@ async def on_ready():
     await bot.start_task(1)
     await bot.start_task(2)
     log.info("Started all tasks")
+    await bot.client.change_presence(game=discord.Game(name=bot.special_begin+'help'))
+    log.info("Started up successfully")
 
 @client.event
 async def on_message(message):

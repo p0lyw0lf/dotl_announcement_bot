@@ -6,7 +6,7 @@ import json
 class HelpCommands(Shell):
     def __init__(self, client, *args, **kwargs):
         super(HelpCommands, self).__init__(client, *args, **kwargs)
-        self.helpdb = Database('./help', './help')
+        self.helpdb = Database('help', 'help')
         self.commands.update({
             "help":
                 {"args": ["user", "channel", "*str"], "func": self.get_help}

@@ -4,7 +4,7 @@ from random import randint
 
 class DiceCommands(VariableCommands):
     def __init__(self, client, *args, **kwargs):
-        super().__init__(client, *args, **kwargs)
+        super(DiceCommands, self).__init__(client, *args, **kwargs)
         self.commands.update({
             "roll":
                 {"args": ["user", "int"], "func": self.roll_dice}

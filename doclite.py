@@ -7,7 +7,7 @@ class Database(object):
 
     def __getitem__(self, key):
         for part in key:
-            if '.' in part or '/' in part:
+            if '..' in part or '/' in part:
                 return ''
         filename = self.file_dir + '/'.join(key)
 

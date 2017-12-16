@@ -1,0 +1,11 @@
+**Command help**
+
+Rolls a dice of specified size
+```
+b!roll {size}
+```
+
+Argument description:
+```
+ 1 (optional): Size of dice to roll. (Default: user dice size)
+```

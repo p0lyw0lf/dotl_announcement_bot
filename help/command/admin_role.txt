@@ -1,0 +1,8 @@
+**Command help**
+
+Sets a role ID as the admin role for the server.
+People who have this role have the ability to call any command with Dotl Bud.
+
+```
+b!admin_role [role_id]
+```

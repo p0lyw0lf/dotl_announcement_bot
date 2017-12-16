@@ -1,0 +1,7 @@
+**Command help**
+
+Gets the roles and associated role IDs for the user who calls it.
+
+```
+b!my_roles
+```

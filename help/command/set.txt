@@ -1,0 +1,13 @@
+**Command help**
+
+To set a variable:
+```
+b!set {global} [variable_name] [value]
+```
+
+Argument description:
+```
+ 1: optional, if included get the global default variable instead of the user-specific one
+ 2-(n-1): A space-separated list of words representing the variable name
+ n: The value to set the variable to. Enclose in quotes ("like so") if spaces are in the value.
+```

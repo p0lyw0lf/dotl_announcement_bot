@@ -1,0 +1,8 @@
+**Variables help**
+
+```
+delete_command:
+ Values: yes/no
+ Description: When you run a command, should DotL Bud delete what you typed?
+ Default: no
+```

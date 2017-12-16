@@ -1,0 +1,10 @@
+**Filter help**
+
+If you did not know already, the Dotl server is against profanity.
+To help the mods, Dotl Bud provides an auto-censor feature that detects profanity,deletes the original message, and re-sends a censored version.
+The filter can be defeated, yes, but the rationale behind this is to preserve any messages users might send that accidentally contain profanity, while still preserving their contents.
+
+Commands:
+```
+filter_word
+```

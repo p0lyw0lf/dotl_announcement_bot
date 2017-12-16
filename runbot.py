@@ -18,7 +18,7 @@ bot = Bot(client)
 bot.schedule_periodic(
     bot.check_rss_factory(
         "http://www.daughterofthelilies.com/rss.php",
-        "371963209508192276",
+        "281960431738683396", #"371963209508192276",
         "Hey everyone! A new page just went up: %%%. Enjoy :3",
         "dotl"
     ),
@@ -29,7 +29,7 @@ bot.schedule_periodic(
 bot.schedule_periodic(
     bot.check_rss_factory(
         "http://bludragongal.tumblr.com/rss",
-        "371963443873447947",
+        "281960431738683396", #"371963443873447947",
         "Hey everyone! Meg just posted to tumblr: %%%. Go check it out!",
         "meg"
     ),
@@ -40,7 +40,7 @@ bot.schedule_periodic(
 bot.schedule_periodic(
     bot.check_rss_factory(
         "http://yokoboo.tumblr.com/rss",
-        "371963443873447947",
+        "281960431738683396", #"371963443873447947",
         "Hey everyone! Yoko just posted to tumblr: %%%. Go check it out!",
         "yoko"
     ),
@@ -85,16 +85,24 @@ async def on_message(message):
         
     response = await bot.parse(message)
     
-    output = bot.format_embed(message.author, response)
+    
     #print(message.channel.id, message.channel.name)
-    if output is not None:
+    if response is not None:
         if bot.is_yes(bot.db[message.author.id, "delete_command"]):
             try:
                 await client.delete_message(message)
             except (Forbidden, NotFound):
                 pass
 
-        rspmsg = await client.send_message(message.channel, embed=output)
+        await client.send_typing(message.channel)
+        
+        if isinstance(message.channel, discord.PrivateChannel) and \
+           type(response) == str:
+            rspmsg = await client.send_message(message.channel, response)
+        else:
+            output = bot.format_embed(message.author, response)
+            rspmsg = await client.send_message(message.channel, embed=output)
+
         log.debug("Sent response {0} to author {1} ({2})"\
               .format(response, message.author.name, message.author.id))
         # If this is turned on and you still don't want it

@@ -1,0 +1,6 @@
+**RSS Feed help**
+
+Dotl Bud contains a feature to parse the RSS feeds for Dotl's, Meg's, and Yoko's websites and send alerts when any new content is posted.
+If the new content doesn't show up immediately, be patient! The RSS often lags a few minutes behind the actual postings, and Dotl Bud only checks for new postings every 10min anyway.
+
+If any new RSS feeds need to be added, please contact PolyWolf.

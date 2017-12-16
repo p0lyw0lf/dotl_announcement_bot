@@ -1,0 +1,12 @@
+**Command help**
+
+To manually retrieve the value of the variable:
+```
+b!get {global} [variable_name]
+```
+
+Argument description:
+```
+ 1: optional, if included get the global default variable instead of the user-specific one
+ 2-n: A space-separated list of words representing the variable name
+```

@@ -1,0 +1,12 @@
+**Utility help**
+
+Dotl Bud has other capabilities too!
+These commands focus on mostly administrative stuff.
+
+Commands:
+```
+channel_info
+my_roles
+restrict_command
+admin_role
+```

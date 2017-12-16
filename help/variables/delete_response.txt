@@ -1,0 +1,8 @@
+**Variables help**
+
+```
+delete_response:
+ Values: yes/no
+ Description: When Dotl Bud responds to a command, should the response be deleted?
+ Default: no
+```

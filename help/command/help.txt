@@ -1,0 +1,6 @@
+**Command help**
+
+Gets help about a particular topic
+```
+b!help [path_to_helps]
+```

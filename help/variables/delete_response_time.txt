@@ -1,0 +1,9 @@
+**Variables help**
+
+```
+delete_response_time:
+ Values: [integer]
+ Description: If DotL Bud should delete its response, how many seconds should it wait before
+ doing so?
+ Default: 5
+```

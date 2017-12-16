@@ -10,7 +10,7 @@ class RSSChecker(VariableCommands):
     def __init__(self, client, *args, **kwargs):
         super(RSSChecker, self).__init__(client, *args, **kwargs)
 
-    def is_announceable(item):
+    def is_announceable(self, item):
         if not item.has_key("tags"): # welp, guess we'll post it
             return True
         for tag in item["tags"]:
@@ -24,7 +24,7 @@ class RSSChecker(VariableCommands):
             feed = feedparser.parse(url)
             item = feed["items"][0] # Most recent
             # check announceable first, in case tag is added after it's posted
-            if is_announceable(item) and item["link"] != self.db[dbitem]:
+            if self.is_announceable(item) and item["link"] != self.db[dbitem]:
                 self.db[dbitem] = item["link"]
                 await self.send_simple_message(
                     message_template.replace("%%%", item["link"]),

@@ -1,0 +1,9 @@
+**Command help**
+
+If you have already run the `admin_role` command, this command restricts usage of a command to only those who have that admin role. There is no multiple-tier permission system yet.
+
+```
+b!restrict_command [command] {restrict?}
+```
+
+If the `restrict?` arg is `no`, then the command becomes unrestricted.

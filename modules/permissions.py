@@ -6,23 +6,25 @@ import discord
 class Permissions(Shell):
     def __init__(self, client, *args, **kwargs):
         super().__init__(client, *args, **kwargs)
-        self.permdb = Database('perms', 'perms')
+        self.permdb = Database('perms', 'default')
         self.commands.update({
             "restrict_command":
                 {"args": ["server", "str", "yes?"], "func": self.restrict_command},
-            "set_admin_role":
+            "admin_role":
                 {"args": ["server", "int"], "func": self.set_admin_role},
         })
 
     async def restrict_command(self, server, command=None, restrict=True):
         if command is None: return "You need to specify a command."
+        if command not in self.commands:
+            return "`{}` is not a valid command".format(command)
 
         if restrict:
             self.permdb[server.id, 'restricted', command.lower()] = 'yes'
-            return "Restricted use of {} to admins only.".format(command)
+            return "Restricted use of `{}` to admins only.".format(command)
         else:
             self.permdb[server.id, 'restricted', command.lower()] = 'no'
-            return "Allowed use of {} for everyone.".format(command)
+            return "Allowed use of `{}` for everyone.".format(command)
 
         
 

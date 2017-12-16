@@ -1,48 +1,21 @@
 **Variables help**
 
 Variables are DotL Bud's way of storing data both for specific users and in general.
-DotL Bud will use these variables to configure itself, to store offline user data,
-or to customize commands.
+DotL Bud will use these variables to configure itself, to store offline user data, or to customize commands.
 
-While nearly every module uses these variables, this help page is only deals with the basics
-of setting and retrieving variables.
+While nearly every module uses these variables to some degree.
 
-To manually retrieve the value of the variable:
+Commands:
 ```
-b!get {global} [variable_name]
-```
-
-Argument description:
-```
- 1: optional, if included get the global default variable instead of the user-specific one
- 2-n: A space-separated list of words representing the variable name
-```
-
-To set a variable:
-```
-b!set {global} [variable_name] [value]
-```
-
-Argument description:
-```
- 1: optional, if included get the global default variable instead of the user-specific one
- 2-(n-1): A space-separated list of words representing the variable name
- n: The value to set the variable to. Enclose in quotes ("like so") if spaces are in the value.
+set
+get
 ```
 
 Basic variables:
 ```
-delete_command:
- Values: yes/no
- Description: When you run a command, should DotL Bud delete what you typed?
- Default: no
-delete_response:
- Values: yes/no
- Description: When Dotl Bud responds to a command, should the response be deleted?
- Default: no
-delete_response_time:
- Values: [integer]
- Description: If DotL Bud should delete its response, how many seconds should it wait before
- doing so?
- Default: 5
+delete_command
+delete_response
+delete_response_time
 ```
+
+Use `help variables [variable_name]` for more information

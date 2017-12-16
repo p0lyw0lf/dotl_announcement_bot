@@ -7,9 +7,9 @@ class MiscCommands(Shell):
         super(MiscCommands, self).__init__(client, *args, **kwargs)
         
         self.commands.update({
-            "get_channel_info":
+            "channel_info":
                 {"args": ["message", "channel"], "func": self.get_channel_info},
-            "get_my_roles":
+            "my_roles":
                 {"args": ["server", "user"], "func": self.get_roles},
             "filter_word":
                 {"args": ["str"], "func": self.filter_word},
@@ -23,7 +23,8 @@ class MiscCommands(Shell):
         out = dict()
         for mention in message.channel_mentions:
             out[mention.name] = "ID: {}\nTopic: {}".format(mention.id, mention.topic)
-        out[channel.name] = "ID: {}\nTopic: {}".format(channel.id, channel.topic)
+        if not message.channel_mentions:
+            out[channel.name] = "ID: {}\nTopic: {}".format(channel.id, channel.topic)
         return out
 
     async def get_roles(self, server, user):

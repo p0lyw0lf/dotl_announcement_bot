@@ -1,6 +1,7 @@
 from .shell import Shell
 
 import discord
+import logging as log
 
 class MiscCommands(Shell):
     def __init__(self, client, *args, **kwargs):
@@ -46,7 +47,7 @@ class MiscCommands(Shell):
         filter_list = filter_file.read().split("\n")
         filter_file.close()
         
-        word = word.to_lower()
+        word = word.lower()
         if word in filter_list: return "That word is already in the list"
 
         filter_file = open("db/bad_word_list", 'a')
@@ -59,6 +60,8 @@ class MiscCommands(Shell):
 
     def reset_filter(self):
         # Placeholder for actual method
+        super().reset_filter()
+        log.warn("Fake reset called")
         pass
 
     # Useless because commands containing bad words are deleted before
@@ -71,7 +74,7 @@ class MiscCommands(Shell):
         filter_list = filter_file.read().split("\n")
         filter_file.close()
 
-        word = word.to_lower()
+        word = word.lower()
         if word not in filter_list: return "That word is not on the list"
 
         filter_file = open("db/bad_word_list", "w")

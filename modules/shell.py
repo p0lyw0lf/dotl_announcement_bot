@@ -9,6 +9,7 @@ class Shell:
         self.special_begin = 'b!'
         self.tokenizing_regex = re.compile("([^\s\"']+|\"([^\"]*)\"|'([^']*)')")
         self.commands = dict()
+        self.databases = []
 
         self.force_words = {"force", "-f", "--force", "justdoit"}
         self.yes_words = {"true", "1", "yes", "-y", "--yes", "yup"}
@@ -64,3 +65,7 @@ class Shell:
 
     async def update_simple_message(self, response, message_obj, channel):
         return await self.client.edit_message(message_obj, response)
+
+    async def commit_dbs(self):
+        for db in self.databases:
+            db.commit()

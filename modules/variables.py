@@ -1,11 +1,12 @@
-from doclite import Database
+from doclite import InMemDatabase
 from .shell import Shell
 
 
 class VariableCommands(Shell):
     def __init__(self, client, *args, **kwargs):
         super().__init__(client, *args, **kwargs)
-        self.db = Database('db', 'global')
+        self.db = InMemDatabase('db', 'global')
+        self.databases.append(self.db)
         self.commands.update({
             "set":
                 {"args": ["user", "*str", "str"], "func": self.set_user_data},

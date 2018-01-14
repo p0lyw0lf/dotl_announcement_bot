@@ -1,6 +1,7 @@
 import traceback
 from discord import Forbidden
 from discord.errors import NotFound
+import asyncio
 import sys
 
 from modules.help import HelpCommands

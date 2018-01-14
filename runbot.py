@@ -48,6 +48,12 @@ bot.schedule_periodic(
     2
 )
 
+bot.schedule_periodic(
+    bot.commit_dbs,
+    1 * 60 * 60,
+    3
+)
+
 @client.event
 async def on_ready():
     log.info('------')
@@ -58,6 +64,7 @@ async def on_ready():
     await bot.start_task(0)
     await bot.start_task(1)
     await bot.start_task(2)
+    await bot.start_task(3)
     log.info("Started all tasks")
     await bot.client.change_presence(game=discord.Game(name=bot.special_begin+'help'))
     log.info("Started up successfully")

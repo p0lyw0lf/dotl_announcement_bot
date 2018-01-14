@@ -1,12 +1,12 @@
 from .shell import Shell
-from doclite import Database
-import json
+from doclite import InMemDatabase
 
 
 class HelpCommands(Shell):
     def __init__(self, client, *args, **kwargs):
         super(HelpCommands, self).__init__(client, *args, **kwargs)
-        self.helpdb = Database('help', 'help')
+        self.helpdb = InMemDatabase('help', 'help')
+        self.databases.append(self.helpdb)
         self.commands.update({
             "help":
                 {"args": ["user", "channel", "*str"], "func": self.get_help}

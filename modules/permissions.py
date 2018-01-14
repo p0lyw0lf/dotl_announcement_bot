@@ -1,4 +1,4 @@
-from doclite import Database
+from doclite import InMemDatabase
 from .shell import Shell
 
 import discord
@@ -6,7 +6,8 @@ import discord
 class Permissions(Shell):
     def __init__(self, client, *args, **kwargs):
         super().__init__(client, *args, **kwargs)
-        self.permdb = Database('perms', 'default')
+        self.permdb = InMemDatabase('perms', 'default')
+        self.databases.append(self.permdb)
         self.commands.update({
             "restrict_command":
                 {"args": ["server", "str", "yes?"], "func": self.restrict_command},

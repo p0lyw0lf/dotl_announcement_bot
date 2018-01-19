@@ -148,9 +148,5 @@ if __name__ == "__main__":
     tok = file.read()
     file.close()
     log.info("Starting...")
-    while True:
-        try:
-            client.run(tok)
-        except Exception as e:
-            log.error(traceback.format_exc())
+    client.run(tok)
 

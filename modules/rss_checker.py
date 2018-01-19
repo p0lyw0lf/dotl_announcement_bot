@@ -18,17 +18,13 @@ class RSSChecker(VariableCommands):
                 return True
         return False
 
-    def check_rss_factory(self, url, channel, message_template, tag):
-        dbitem = ("last_link_"+tag,)
-        async def check_rss():
-            feed = feedparser.parse(url)
-            item = feed["items"][0] # Most recent
-            # check announceable first, in case tag is added after it's posted
-            if self.is_announceable(item) and item["link"] != self.db[dbitem]:
-                self.db[dbitem] = item["link"]
-                await self.send_simple_message(
-                    message_template.replace("%%%", item["link"]),
-                    self.client.get_channel(channel)
-                )
-            
-        return check_rss
+    async def check_rss(self, url, channel, message_template, tag):
+        feed = feedparser.parse(url)
+        item = feed["items"][0] # Most recent
+        # check announceable first, in case tag is added after it's posted
+        if self.is_announceable(item) and item["link"] != self.db[dbitem]:
+            self.db[dbitem] = item["link"]
+            await self.send_simple_message(
+                message_template.replace("%%%", item["link"]),
+                self.client.get_channel(channel)
+            )

@@ -1,9 +1,10 @@
 from modules.rss_checker import RSSChecker
+from modules.auto_roler import AutoRoler
 
 import asyncio
 from contextlib import suppress
 
-class Scheduler(RSSChecker):
+class Scheduler(RSSChecker, AutoRoler):
     def __init__(self, client, *args, **kwargs):
         super(Scheduler, self).__init__(client, *args, **kwargs)
 
@@ -12,8 +13,8 @@ class Scheduler(RSSChecker):
         self.task_func = dict()
         self.task_wait = dict()
 
-    def schedule_periodic(self, func, time, taskid):
-        self.task_func[taskid] = func
+    def schedule_periodic(self, func, args, kwargs, time, taskid):
+        self.task_func[taskid] = (func, args, kwargs)
         self.task_wait[taskid] = time
         self.task_running[taskid] = False
 
@@ -30,6 +31,7 @@ class Scheduler(RSSChecker):
                 await self.task_list[taskid]
 
     async def run_task(self, taskid):
+        func, args, kwargs = self.task_func[taskid]
         while True:
-            await self.task_func[taskid]()
+            await func(*args, **kwargs)
             await asyncio.sleep(self.task_wait[taskid])

@@ -1,3 +1,5 @@
+import datetime
+
 import discord
 from discord import Forbidden
 from discord.errors import NotFound
@@ -16,42 +18,62 @@ class Bot(Parser, Scheduler, ProfanityFilter):
 
 bot = Bot(client)
 bot.schedule_periodic(
-    bot.check_rss_factory(
+    bot.check_rss, 
+    (
         "http://www.daughterofthelilies.com/rss.php",
         "371963209508192276",
         "Hey everyone! A new page just went up: %%%. Enjoy :3",
         "dotl"
     ),
-    10 * 60,
+    {},
+    10 * 60, # 10 min
     0
 )
 
 bot.schedule_periodic(
-    bot.check_rss_factory(
+    bot.check_rss, 
+    (
         "http://bludragongal.tumblr.com/rss",
         "371963443873447947",
         "Hey everyone! Meg just posted to tumblr: %%%. Go check it out!",
         "meg"
     ),
-    10 * 60,
+    {},
+    10 * 60, # 10 min
     1
 )
 
 bot.schedule_periodic(
-    bot.check_rss_factory(
+    bot.check_rss, 
+    (
         "http://yokoboo.tumblr.com/rss",
         "371963443873447947",
         "Hey everyone! Yoko just posted to tumblr: %%%. Go check it out!",
         "yoko"
-    ),
-    10 * 60,
+    ), 
+    {},
+    10 * 60, # 10 min
     2
 )
 
 bot.schedule_periodic(
     bot.commit_dbs,
-    1 * 60 * 60,
+    tuple(),
+    {},
+    1 * 60 * 60, # 1 hour
     3
+)
+
+bot.schedule_periodic(
+    bot.check_roles,
+    (
+        "368564065733312523", # server id
+        "387319441865703424", # new role id
+        datetime.timedelta(weeks=2)
+    ),
+    {},
+    1 * 24 * 60 * 60, # 1 day
+    4
 )
 
 @client.event
@@ -65,6 +87,7 @@ async def on_ready():
     await bot.start_task(1)
     await bot.start_task(2)
     await bot.start_task(3)
+    await bot.start_task(4)
     log.info("Started all tasks")
     await bot.client.change_presence(game=discord.Game(name=bot.special_begin+'help'))
     log.info("Started up successfully")

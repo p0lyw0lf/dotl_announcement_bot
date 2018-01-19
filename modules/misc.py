@@ -21,12 +21,15 @@ class MiscCommands(Shell):
         })
 
     async def get_channel_info(self, message, channel):
-        out = dict()
-        for mention in message.channel_mentions:
-            out[mention.name] = "ID: {}\nTopic: {}".format(mention.id, mention.topic)
-        if not message.channel_mentions:
-            out[channel.name] = "ID: {}\nTopic: {}".format(channel.id, channel.topic)
-        return out
+        if not channel.is_private:
+            out = dict()
+            for mention in message.channel_mentions:
+                out[mention.name] = "ID: {}\nTopic: {}".format(mention.id, mention.topic)
+            if not message.channel_mentions:
+                out[channel.name] = "ID: {}\nTopic: {}".format(channel.id, channel.topic)
+            return out
+        else:
+            return None
 
     async def get_roles(self, server, user):
         out = dict()

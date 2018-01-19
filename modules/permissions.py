@@ -20,12 +20,15 @@ class Permissions(Shell):
         if command not in self.commands:
             return "`{}` is not a valid command".format(command)
 
-        if restrict:
-            self.permdb[server.id, 'restricted', command.lower()] = 'yes'
-            return "Restricted use of `{}` to admins only.".format(command)
+        if server is not None:
+            if restrict:
+                self.permdb[server.id, 'restricted', command.lower()] = 'yes'
+                return "Restricted use of `{}` to admins only.".format(command)
+            else:
+                self.permdb[server.id, 'restricted', command.lower()] = 'no'
+                return "Allowed use of `{}` for everyone.".format(command)
         else:
-            self.permdb[server.id, 'restricted', command.lower()] = 'no'
-            return "Allowed use of `{}` for everyone.".format(command)
+            return "It dosen't make sense to restrict commands in PMs!"
 
         
 

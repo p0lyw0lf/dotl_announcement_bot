@@ -1,10 +1,12 @@
 import datetime
+import traceback
+import logging as log
 
 import discord
 from discord import Forbidden
 from discord.errors import NotFound
 import asyncio
-import logging as log
+
 from command_parser import Parser
 from command_scheduler import Scheduler
 from profanity_filter import ProfanityFilter
@@ -141,6 +143,14 @@ async def on_message(message):
         if bot.is_yes(bot.db[message.author.id, "delete_response"]):
             asyncio.ensure_future(bot.wait_then_delete(rspmsg, message.author))
 
-with open('oauth2.tok') as file:
+if __name__ == "__main__":
+    file = open('oauth2.tok')
+    tok = file.read()
+    file.close()
     log.info("Starting...")
-    client.run(file.read())
+    while True:
+        try:
+            client.run(tok)
+        except Exception as e:
+            log.error(traceback.format_exc())
+

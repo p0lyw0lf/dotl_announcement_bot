@@ -14,6 +14,7 @@ class AutoRoler():
         
         server = self.client.get_server(serverid)
         role = discord.utils.get(server.roles, id=roleid)
+        print(str(role))
         
         if previous_roleid is None:
             previous_role = server.default_role
@@ -21,8 +22,9 @@ class AutoRoler():
             previous_role = discord.utils.get(server.roles, id=previous_roleid)
             
         for member in server.members:
-            if member.joined_at + timelimit > curtime:
-                if previous_role in member.roles and role not in member.roles:
+            if member.joined_at + timelimit < curtime:
+                if previous_role in member.roles and role not in member.roles:    
+                    log.info(str(member)+": "+str(member.joined_at)+" | "+str(curtime)+" | "+str(member.joined_at+timelimit))
                     try:
                         self.client.add_roles(member, role)
                         log.info("[SUCCESS] Changing role of "+str(member)+" succeeded")

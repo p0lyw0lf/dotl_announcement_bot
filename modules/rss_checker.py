@@ -23,7 +23,6 @@ class RSSChecker(VariableCommands):
         item = feed["items"][0] # Most recent
         dbitem = ("last_link_"+tag,)
         # check announceable first, in case tag is added after it's posted
-        print(dbitem)
         if self.is_announceable(item) and item["link"] != self.db[dbitem]:
             self.db[dbitem] = item["link"]
             await self.send_simple_message(

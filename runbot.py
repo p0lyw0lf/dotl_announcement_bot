@@ -27,7 +27,7 @@ bot.schedule_periodic(
         "Hey everyone! A new page just went up: %%%. Enjoy :3",
         "dotl"
     ),
-    {},
+    {'pin_message': True},
     10 * 60, # 10 min
     0
 )
@@ -115,8 +115,11 @@ async def on_message(message):
 
         return
         
+    if discord.utils.find(lambda user: user.id == client.user.id, message.mentions) and\
+    'good' in message.content.lower():
+        await bot.send_simple_message("Thank you!~", message.channel)
+        
     response = await bot.parse(message)
-    
     
     #print(message.channel.id, message.channel.name)
     if response is not None:

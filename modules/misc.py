@@ -14,8 +14,8 @@ class MiscCommands(Shell):
                 {"args": ["server", "user"], "func": self.get_roles},
             "filter_word":
                 {"args": ["str"], "func": self.filter_word},
-            #"unfilter_word":
-            #    {"args": ["str"], "func": self.unfilter_word},
+            "unfilter_word":
+                {"args": ["str"], "func": self.unfilter_word},
             #"get_server_info":
             #    {"args": ["server"], "func": self.get_server_info}
         })
@@ -45,15 +45,15 @@ class MiscCommands(Shell):
         if word is None: return "You need to specify a word!"
         # What I'm doing here probably isn't good for million-line files,
         # but should be good enough for the small list here
-        filter_file = open("db/bad_word_list", 'r')
+        filter_file = open("filter/bad_word_list", 'r')
 
-        filter_list = filter_file.read().split("\n")
+        filter_list = [x for x in filter_file.read().split("\n") if x]
         filter_file.close()
         
         word = word.lower()
         if word in filter_list: return "That word is already in the list"
 
-        filter_file = open("db/bad_word_list", 'a')
+        filter_file = open("filter/bad_word_list", 'a')
         filter_file.write("\n" + word)
         filter_file.close()
 
@@ -69,10 +69,10 @@ class MiscCommands(Shell):
 
     # Useless because commands containing bad words are deleted before
     # they can be parsed. Will add back once I change that
-    """ async def unfilter_word(self, word=None):
-        if word in None: return "You need to specify a word!"
+    async def unfilter_word(self, word=None):
+        if word is None: return "You need to specify a word!"
 
-        filter_file = open("db/bad_word_list", 'r')
+        filter_file = open("filter/bad_word_list", 'r')
 
         filter_list = filter_file.read().split("\n")
         filter_file.close()
@@ -80,15 +80,16 @@ class MiscCommands(Shell):
         word = word.lower()
         if word not in filter_list: return "That word is not on the list"
 
-        filter_file = open("db/bad_word_list", "w")
+        filter_file = open("filter/bad_word_list", "w")
 
         for wordi in range(len(filter_list)):
-            filter_file.write(filter_list[wordi])
-            if wordi < len(filter_list) - 1:
-                filter_file.write("\n")
+            if filter_list[wordi] and filter_list[wordi] != word:
+                filter_file.write(filter_list[wordi])
+                if wordi < len(filter_list) - 1:
+                    filter_file.write("\n")
 
         filter_file.close()
 
         self.reset_filter()
 
-        return "Word removed from list successfully" """
+        return "Word removed from list successfully"

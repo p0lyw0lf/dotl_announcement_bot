@@ -92,14 +92,14 @@ class Parser(MiscCommands, HelpCommands, DiceCommands, Permissions):
                         args = self.get_args(command, tokens, message_obj, user, server, channel)
                         output = await self.commands[command]["func"](*args)
 
-                        return output
+                        return command, output
                     else:
-                        return "You do not have permission to run that command"
+                        return command, "You do not have permission to run that command"
 
                 else:
-                    return f"The command {message} does not exist."
+                    return command, f"The command {message} does not exist."
 
-            return None
+            return None, None
 
         except Exception as e:
             traceback.print_exc()

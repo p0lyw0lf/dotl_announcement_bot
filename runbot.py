@@ -78,6 +78,8 @@ bot.schedule_periodic(
     4
 )
 
+unfiltered_commands = {"filter_word", "unfilter_word"}
+
 @client.event
 async def on_ready():
     log.info('------')
@@ -96,9 +98,12 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    
+    # REAALY would prefer not to do this b/c people can get
+    # around filter using commands that have effects inside them but idk
+    command, response = await bot.parse(message)
+ 
     filtered = bot.filter(message.content)
-    if filtered:
+    if filtered and command not in unfiltered_commands:
         try:
             await client.delete_message(message)
             # we don't want to hit the limit
@@ -119,7 +124,6 @@ async def on_message(message):
     'good' in message.content.lower():
         await bot.send_simple_message("Thank you!~", message.channel)
         
-    response = await bot.parse(message)
     
     #print(message.channel.id, message.channel.name)
     if response is not None:

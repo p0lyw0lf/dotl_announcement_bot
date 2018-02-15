@@ -1,0 +1,7 @@
+**Command help**
+
+Adds a link of an image to a meme. The meme must be registered.
+
+```
+b!add_to <meme> <link>
+```

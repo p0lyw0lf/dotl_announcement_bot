@@ -47,8 +47,8 @@ class Shell:
             for field in response:
                 output.add_field(name=field, value=response[field])
         else:
-            # I have no idea
-            return None
+            # response is probably embed already
+            return response
 
         return output
 

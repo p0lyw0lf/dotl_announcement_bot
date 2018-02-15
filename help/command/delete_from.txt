@@ -1,0 +1,7 @@
+**Command help**
+
+Deletes a specific link from a meme. The index is the same as the one reported in `show_from`.
+
+```
+b!delete_from <meme> <index>
+```

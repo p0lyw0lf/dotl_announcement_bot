@@ -1,0 +1,7 @@
+**Command help**
+
+Deletes a meme. To be used sparingly.
+
+```
+b!delete_meme <meme>
+```

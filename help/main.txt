@@ -6,6 +6,7 @@ Help sections:
 
 **Variables**: `help variables`
 **Dice**: `help dice`
+**Memes**: `help memes`
 **Profanity Filter**: `help filter`
 **RSS Feeds**: `help rss`
 **Utility**: `help util`

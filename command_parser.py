@@ -8,9 +8,10 @@ from modules.help import HelpCommands
 from modules.dice import DiceCommands
 from modules.misc import MiscCommands
 from modules.permissions import Permissions
+from modules.memes import MemeCommands
 from utils import safe_int, safe_float
 
-class Parser(MiscCommands, HelpCommands, DiceCommands, Permissions):
+class Parser(MiscCommands, HelpCommands, DiceCommands, Permissions, MemeCommands):
     # I'm hoping to do NLP someday, but idk what I need to do
     # in order to make compatibility for it...
     def __init__(self, client, *args, **kwargs):
@@ -19,7 +20,7 @@ class Parser(MiscCommands, HelpCommands, DiceCommands, Permissions):
     def full_tokenize(self, message):
         message = message[len(self.special_begin):] if message.startswith(self.special_begin) else message
         tokens = self.tokenize(message)
-        command = self.autocomplete(tokens[0], self.commands)
+        command = tokens[0] #self.autocomplete(tokens[0], self.commands)
         tokens = tokens[1:][::-1]
         return command, tokens
 
@@ -111,4 +112,4 @@ class Parser(MiscCommands, HelpCommands, DiceCommands, Permissions):
         if force:
             await self.client.purge_from(channel)
         else:
-            return """Are you sure? Use `%clear force` to do it for real"""
+            return "Are you sure? Use `b!clear force` to do it for real"

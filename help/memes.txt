@@ -1,0 +1,15 @@
+**Memes help**
+
+Whoa my dudes how bout dat I can do the "may may" too
+
+Memes are on a per-server basis. You can use these commands to edit/use the memes in the current server.
+
+Commands:
+```
+register_meme
+add_to
+show_memes
+show_from
+delete_meme
+delete_from
+```

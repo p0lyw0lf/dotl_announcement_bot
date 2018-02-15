@@ -92,6 +92,7 @@ async def on_ready():
     await bot.start_task(2)
     await bot.start_task(3)
     await bot.start_task(4)
+    await bot.register_all_memes()
     log.info("Started all tasks")
     await bot.client.change_presence(game=discord.Game(name=bot.special_begin+'help'))
     log.info("Started up successfully")

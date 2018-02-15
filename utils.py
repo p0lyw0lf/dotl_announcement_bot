@@ -21,3 +21,9 @@ def safe_float(string):
         return float(string)
     except ValueError:
         return random.random()
+        
+def ent2list(string, exclude=set()):
+    return [x for x in string.split("\n") if x and x not in exclude]
+    
+def list2ent(l):
+    return "\n".join(l)

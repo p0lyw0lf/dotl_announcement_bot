@@ -1,0 +1,7 @@
+**Command help**
+
+Shows all the available memes on the server, as well as the number of images per meme.
+
+```
+b!show_memes
+```

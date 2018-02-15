@@ -1,0 +1,7 @@
+**Command help**
+
+Makes a command for a meme and allows links to be added to it.
+
+```
+b!register_meme <meme>
+```

@@ -14,13 +14,15 @@ class MiscCommands(Shell):
                 {"args": ["server", "user"], "func": self.get_roles},
             "filter_word":
                 {"args": ["str"], "func": self.filter_word},
+            "filter":
+                {"args": ["str"], "func": self.filter_word},
             "unfilter_word":
                 {"args": ["str"], "func": self.unfilter_word},
             #"get_server_info":
             #    {"args": ["server"], "func": self.get_server_info}
         })
 
-    async def get_channel_info(self, message, channel):
+    async def get_channel_info(self, message, channel, *args):
         if not channel.is_private:
             out = dict()
             for mention in message.channel_mentions:
@@ -31,7 +33,7 @@ class MiscCommands(Shell):
         else:
             return None
 
-    async def get_roles(self, server, user):
+    async def get_roles(self, server, user, *args):
         out = dict()
         if isinstance(user, discord.Member): # PMs different from servers
             for role in user.roles:
@@ -41,7 +43,7 @@ class MiscCommands(Shell):
         else:
             return "You have no roles"
 
-    async def filter_word(self, word=None):
+    async def filter_word(self, word=None, *args):
         if word is None: return "You need to specify a word!"
         # What I'm doing here probably isn't good for million-line files,
         # but should be good enough for the small list here
@@ -69,7 +71,7 @@ class MiscCommands(Shell):
 
     # Useless because commands containing bad words are deleted before
     # they can be parsed. Will add back once I change that
-    async def unfilter_word(self, word=None):
+    async def unfilter_word(self, word=None, *args):
         if word is None: return "You need to specify a word!"
 
         filter_file = open("filter/bad_word_list", 'r')

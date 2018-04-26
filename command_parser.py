@@ -98,13 +98,13 @@ class Parser(MiscCommands, HelpCommands, DiceCommands, Permissions, MemeCommands
                         return command, "You do not have permission to run that command"
 
                 else:
-                    return command, f"The command {message} does not exist."
+                    return command, "The command {} does not exist.".format(message)
 
             return None, None
 
         except Exception as e:
             traceback.print_exc()
-            return f"An exception of {type(e)} was thrown."
+            return "An {} was thrown.".format(type(e))
 
     async def clear_all(self, user, channel, force=False):
         if user.id not in self.admins:

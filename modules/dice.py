@@ -19,5 +19,5 @@ class DiceCommands(VariableCommands):
         out["Dice size"] = str(dice_size)
         result = randint(1, dice_size)
         message = self.db[(user.id, "dice", str(dice_size), str(result))]
-        out["Result"] = f"You rolled a {result}!" + (" " if message else "") + message
+        out["Result"] = "You rolled a {}!".format(result) + (" " if message else "") + message
         return out

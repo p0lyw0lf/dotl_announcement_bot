@@ -32,25 +32,7 @@ class ProfanityFilter:
     }
     def __init__(self, client, *args, **kwargs):
         #super(ProfanityFilter, self).__init__(client, *args, **kwargs)
-        filter_file = open("filter/bad_word_list", 'r')
-        replace_file = open("filter/bad_word_replace", 'r')
-
-        filter_list = filter_file.read().split("\n")
-        self.replace_list = replace_file.read().split("\n")
-
-        self.regex_string = "\\b("
-
-        for filter_word in filter_list:
-            if filter_word:
-                self.regex_string += "("
-                self.regex_string += "".join(map(
-                    lambda char: self.letter2regex[char],
-                    filter_word
-                ))  # Use "\\s*" to detect spaces in between letters as well
-                self.regex_string += ")|"
-
-        self.regex_string = self.regex_string[:-1] +")\\b"
-        self.regex = re.compile(self.regex_string)
+        self.reset_filter()
 
     def reset_filter(self):
         filter_file = open("filter/bad_word_list", 'r')
@@ -65,7 +47,7 @@ class ProfanityFilter:
             if filter_word:
                 self.regex_string += "("
                 self.regex_string += "".join(map(
-                    lambda char: self.letter2regex[char],
+                    lambda char: self.letter2regex.get(char, "\\"+char),
                     filter_word
                 ))  # Use "\\s*" to detect spaces in between letters as well
                 self.regex_string += ")|"

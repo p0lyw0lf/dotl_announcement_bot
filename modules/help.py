@@ -18,7 +18,7 @@ class HelpCommands(Shell):
         path[-1] += '.txt'
         data = self.helpdb[tuple(path)]
         if data == '':
-            return f"Sorry, help for {' '.join(path)} cannot be found"
+            return "Sorry, help for {} cannot be found".format(' '.join(path))
 
         if channel.is_private:
             return data

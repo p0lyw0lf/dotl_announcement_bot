@@ -29,7 +29,7 @@ bot.schedule_periodic(
     ),
     {'pin_message': True},
     10 * 60, # 10 min
-    0
+    'dotl_rss'
 )
 
 bot.schedule_periodic(
@@ -42,7 +42,7 @@ bot.schedule_periodic(
     ),
     {},
     10 * 60, # 10 min
-    1
+    'meg_rss'
 )
 
 bot.schedule_periodic(
@@ -55,7 +55,7 @@ bot.schedule_periodic(
     ), 
     {},
     10 * 60, # 10 min
-    2
+    'yoko_rss'
 )
 
 bot.schedule_periodic(
@@ -63,7 +63,7 @@ bot.schedule_periodic(
     tuple(),
     {},
     1 * 60 * 60, # 1 hour
-    3
+    'commit_dbs'
 )
 
 bot.schedule_periodic(
@@ -75,7 +75,18 @@ bot.schedule_periodic(
     ),
     {},
     1 * 24 * 60 * 60, # 1 day
-    4
+    'check_roles'
+)
+
+bot.schedule_periodic(
+    bot.delete_previous_pins,
+    (
+        "371963209508192276",
+        datetime.timedelta(weeks=8),
+    ),
+    {},
+    1 * 24 * 60 * 60, # 1 day
+    'delete_previous_pins'
 )
 
 unfiltered_commands = {"filter_word", "unfilter_word"}
@@ -87,11 +98,12 @@ async def on_ready():
     log.info(client.user.name)
     log.info(client.user.id)
     log.info('------')
-    await bot.start_task(0)
-    await bot.start_task(1)
-    await bot.start_task(2)
-    await bot.start_task(3)
-    await bot.start_task(4)
+    await bot.start_task('dotl_rss')
+    await bot.start_task('meg_rss')
+    await bot.start_task('yoko_rss')
+    await bot.start_task('delete_previous_pins')
+    await bot.start_task('commit_dbs')
+    await bot.start_task('check_roles')
     await bot.register_all_memes()
     log.info("Started all tasks")
     await bot.client.change_presence(game=discord.Game(name=bot.special_begin+'help'))

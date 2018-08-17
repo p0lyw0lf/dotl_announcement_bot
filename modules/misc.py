@@ -14,12 +14,14 @@ class MiscCommands(Shell):
                 {"args": ["server", "user"], "func": self.get_roles},
             "filter_word":
                 {"args": ["str"], "func": self.filter_word},
-            "filter":
-                {"args": ["str"], "func": self.filter_word},
             "unfilter_word":
                 {"args": ["str"], "func": self.unfilter_word},
             #"get_server_info":
             #    {"args": ["server"], "func": self.get_server_info}
+        })
+        self.commands.update({
+            "filter": self.commands["filter_word"],
+            "unfilter": self.commands["unfilter_word"],
         })
 
     async def get_channel_info(self, message, channel, *args):

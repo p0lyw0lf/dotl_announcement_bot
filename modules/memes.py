@@ -63,11 +63,13 @@ class MemeCommands(VariableCommands):
                 return "I don't have any images for \"{}\"".format(meme)
                 
             if index is None:
-                index = randint(0, len(all_links)-1)
-                
+                index = randint(1, len(all_links))
+            elif index < 1 or index > len(all_links):
+                return "There's not even that many memes! Please provide me a number from 1 to {}".format(len(all_memes))
+
             embed = discord.Embed()
             embed.color = 0x0da000
-            embed.set_image(url=all_links[index])
+            embed.set_image(url=all_links[index-1])
             
             return embed
             
@@ -165,7 +167,7 @@ class MemeCommands(VariableCommands):
             
         all_links = ent2list(self.db["memes_in", server.id, meme])
         
-        if index > len(all_links):
+        if index < 1 or index > len(all_links):
             return "I only have {} links for that meme!".format(len(all_links))
             
         all_links = [all_links[x] for x in range(len(all_links)) if x+1 != index]

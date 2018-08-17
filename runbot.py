@@ -89,7 +89,7 @@ bot.schedule_periodic(
     'delete_previous_pins'
 )
 
-unfiltered_commands = {"filter_word", "unfilter_word"}
+unfiltered_commands = {"filter", "filter_word", "unfilter", "unfilter_word"}
 
 @client.event
 async def on_ready():

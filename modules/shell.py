@@ -37,7 +37,7 @@ class Shell:
                 return thing
         return string
 
-    def format_embed(self, user, response):
+    def format_embed_unsafe(self, user, response):
         output = Embed()
         output.color = 0x0da000
         output.set_author(name=user.display_name, icon_url=user.avatar_url)
@@ -51,6 +51,31 @@ class Shell:
             return response
 
         return output
+        
+    def format_embed(self, user, response):
+        """
+        Returns a single embed or list of embeds depending on
+        if the content will go over the limit or not.
+        """
+        if isinstance(response, str):
+            if len(response) <= 2048:
+                return self.format_embed_unsafe(user, response)
+            else:
+                return [
+                    self.format_embed_unsafe(user, response[x:x+2048])
+                    for x in range(0, len(response), 2048)
+                ]
+        elif isinstance(response, dict):
+            if len(response) <= 25:
+                return self.format_embed_unsafe(user, response)
+            else:
+                sorted_keys = sorted(response.keys())
+                return [
+                    self.format_embed_unsafe(user, {key: response[key] for key in sorted_keys[x:x+25]})
+                    for x in range(0, len(sorted_keys), 25)
+                ]
+        else:
+            return response
 
     async def send_message(self, response, user, channel):
         output = self.format_embed(user, response)

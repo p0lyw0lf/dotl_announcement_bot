@@ -153,7 +153,11 @@ async def on_message(message):
             rspmsg = await client.send_message(message.channel, response)
         else:
             output = bot.format_embed(message.author, response)
-            rspmsg = await client.send_message(message.channel, embed=output)
+            if isinstance(output, list):
+                rspmsg = [await client.send_message(message.channel, embed=output_obj)
+                    for output_obj in output]
+            else:
+                rspmsg = await client.send_message(message.channel, embed=output)
 
         log.debug("Sent response {0} to author {1} ({2})"\
               .format(response, message.author.name, message.author.id))
@@ -161,7 +165,11 @@ async def on_message(message):
         # deleted, just make main_parser send it from
         # within a method instead of returning something
         if bot.is_yes(bot.db[message.author.id, "delete_response"]):
-            asyncio.ensure_future(bot.wait_then_delete(rspmsg, message.author))
+            if isinstance(rspmsg, list):
+                for msg in rspmsg:
+                    asyncio.ensure_future(bot.wait_then_delete(msg, message.author))
+            else:
+                asyncio.ensure_future(bot.wait_then_delete(rspmsg, message.author))
 
 if __name__ == "__main__":
     file = open('oauth2.tok')

@@ -154,8 +154,9 @@ async def on_message(message):
         else:
             output = bot.format_embed(message.author, response)
             if isinstance(output, list):
-                rspmsg = [await client.send_message(message.channel, embed=output_obj)
-                    for output_obj in output]
+                rspmsg = []
+                for output_obj in output:
+                    rspmsg.append(await client.send_message(message.channel, embed=output_obj))
             else:
                 rspmsg = await client.send_message(message.channel, embed=output)
 

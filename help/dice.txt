@@ -10,6 +10,18 @@ dice size: Number of faces the dice has. Minimum 2. (Default: 6)
 Commands:
 ```
 roll
+d[x]
+```
+where x is in the list `[2, 3, 4, 6, 8, 10, 12, 16, 20]`
+
+Examples:
+```
+b!roll 4        # rolls a 4-sided die
+b!roll d4       # same thing, ignores the d
+b!roll d4 2     # rolls 2 4-sided dice, adds them together
+b!roll 2 d4     # same as before, can switch arguments
+b!d4            # shorter way to roll specified dice.
+b!d4 2          # same thing, only rolls 2 and adds
 ```
 
 Coming eventually: Dice images. 

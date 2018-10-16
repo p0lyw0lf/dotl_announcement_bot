@@ -45,7 +45,10 @@ class Shell:
             output.description = response
         elif isinstance(response, dict):
             for field in response:
-                output.add_field(name=field, value=response[field])
+                if field == 'desc':
+                    output.description = response[field]
+                else:
+                    output.add_field(name=field, value=response[field])
         else:
             # response is probably embed already
             return response

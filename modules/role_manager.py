@@ -24,7 +24,7 @@ class RoleManager(Shell):
             "unwarn": {
                 "args": ["server", "channel", "user", "str"],
                 "func": self.unwarn_user,
-            }
+            },
             "warninfo": {
                 "args": ["server", "channel", "user", "str"],
                 "func": self.warning_info,

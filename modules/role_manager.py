@@ -1,6 +1,6 @@
 import datetime
 import logging as log
-from doclite import InMemDatabase
+from doclite import JsonDatabase
 from .shell import Shell
 
 import discord
@@ -10,7 +10,7 @@ from discord import Forbidden, HTTPException
 class RoleManager(Shell):
     def __init__(self, client, *args, **kwargs):
         super(RoleManager, self).__init__(client, *args, **kwargs)
-        self.warnings = InMemDatabase("warnings", "default")
+        self.warnings = JsonDatabase("db/warnings.json")
         self.databases.append(self.warnings)
         self.commands.update({
             "probation": {

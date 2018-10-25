@@ -1,5 +1,6 @@
 import os
 import threading
+import json
 
 class Database(object):
     def __init__(self, filename, global_keyword):
@@ -91,6 +92,35 @@ class InMemDatabase(Database):
     def commit(self):
         for path in self.dct:
             super().__setitem__(path, self.dct[path])
+
+class JsonDatabase(Database):
+    def __init__(self, filename):
+        self.filename = filename
+        self._data = dict()
+
+        # Load existing data if available
+        if os.path.isfile(self.filename):
+            try:
+                with open(self.filename, 'r') as fd:
+                    self._data = json.load(fd)
+            except json.JSONDecodeError as e:
+                pass
+
+    def __setitem__(self, key, value):
+        self._data[key] = value
+
+    def __getitem__(self, key):
+        return self._data[key]
+
+    def __delitem__(self, key):
+        try:
+            del self._data[key]
+        except KeyError:
+            pass
+
+    def commit(self):
+        with open(self.filename, 'w') as fd:
+            json.dump(self._data, fd)
 
 if __name__=='__main__':
     d = Database('.')

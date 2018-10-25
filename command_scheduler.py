@@ -1,10 +1,9 @@
 from modules.rss_checker import RSSChecker
-from modules.auto_roler import AutoRoler
 
 import asyncio
 from contextlib import suppress
 
-class Scheduler(RSSChecker, AutoRoler):
+class Scheduler(RSSChecker):
     def __init__(self, client, *args, **kwargs):
         super(Scheduler, self).__init__(client, *args, **kwargs)
 

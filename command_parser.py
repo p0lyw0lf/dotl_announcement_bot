@@ -9,9 +9,10 @@ from modules.dice import DiceCommands
 from modules.misc import MiscCommands
 from modules.permissions import Permissions
 from modules.memes import MemeCommands
+from modules.role_manager import RoleManager
 from utils import safe_int, safe_float
 
-class Parser(MiscCommands, HelpCommands, DiceCommands, Permissions, MemeCommands):
+class Parser(MiscCommands, HelpCommands, DiceCommands, Permissions, MemeCommands, RoleManager):
     # I'm hoping to do NLP someday, but idk what I need to do
     # in order to make compatibility for it...
     def __init__(self, client, *args, **kwargs):

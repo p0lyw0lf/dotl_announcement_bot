@@ -12,7 +12,7 @@ from modules.memes import MemeCommands
 from modules.role_manager import RoleManager
 from utils import safe_int, safe_float
 
-class Parser(MiscCommands, HelpCommands, DiceCommands, Permissions, MemeCommands, RoleManager):
+class Parser(MiscCommands, HelpCommands, DiceCommands, MemeCommands, RoleManager):
     # I'm hoping to do NLP someday, but idk what I need to do
     # in order to make compatibility for it...
     def __init__(self, client, *args, **kwargs):
@@ -27,6 +27,7 @@ class Parser(MiscCommands, HelpCommands, DiceCommands, Permissions, MemeCommands
 
     def get_args(self, command, tokens, message, user, server, channel):
         args = []
+        mention_index = 0
         for index in range(len(self.commands[command]["args"])):
             arg = self.commands[command]['args'][index]
             
@@ -41,8 +42,15 @@ class Parser(MiscCommands, HelpCommands, DiceCommands, Permissions, MemeCommands
                 
             elif arg == "channel":
                 args.append(channel)
+                
+            elif arg == "mention":
+                if mention_index < len(message.mentions):
+                    args.append(message.mentions[mention_index].id)
+                    mention_index += 1
+                else:
+                    args.append(None)
 
-            elif arg == '*player':
+            elif arg == '*mentions':
                 args.append([p.id for p in message.mentions])
                 
             elif len(tokens) != 0:

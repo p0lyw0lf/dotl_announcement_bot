@@ -1,7 +1,0 @@
-**Command help**
-
-Shows all the links associated with a meme, as well as the index each link has. The same index is used in `delete_from`.
-
-```
-b!show_from <meme>
-```

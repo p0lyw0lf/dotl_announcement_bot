@@ -4,12 +4,23 @@ Whoa my dudes how bout dat I can do the "may may" too
 
 Memes are on a per-server basis. You can use these commands to edit/use the memes in the current server.
 
+A meme 
+
 Commands:
 ```
-register_meme
-add_to
+[] = required
+{} = optional
+register_meme [meme_title]
+    Creates a new meme command of the form "b!meme_title {id}". meme_title must contain no spaces.
+    You must run this command before you can add images to a meme.
+add_to [meme_title] [link]
+    Adds an image to a meme category. link must point to an image should not go down/break.
 show_memes
-show_from
-delete_meme
-delete_from
+    Shows all the available memes on the server, as well as how many images each one contains.
+show_from [meme_title]
+    Shows all the links associated with a meme, as well as each one's ID. The same ID is used for showing a specific meme or deleting a link.
+delete_meme [meme_title]
+    Deletes an entire meme and all links associated with it. DO NOT PRESS THE BUTTON LIGHTLY.
+delete_from [meme_title] [id]
+    Deletes a specific link from a meme category. When deleting multiple links, delete the largest ID first so the indexes don't get messed up.
 ```

@@ -1,7 +1,0 @@
-**Command help**
-
-Gets IDs and descriptions of all channels tagged in that same message.
-If no channels are tagged, returns info for the current channel.
-```
-b!channel_info {tagged channels}
-```

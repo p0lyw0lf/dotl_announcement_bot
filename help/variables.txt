@@ -5,7 +5,7 @@ DotL Bud will use these variables to configure itself, to store offline user dat
 
 While nearly every module uses these variables to some degree.
 
-Commands:
+Commands (help can be found using `help command [command_name]`:
 ```
 set
 get

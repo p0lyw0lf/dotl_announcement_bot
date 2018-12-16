@@ -6,5 +6,10 @@ The filter can be defeated, yes, but the rationale behind this is to preserve an
 
 Commands:
 ```
-filter_word
+[] = required
+{} = optional
+filter_word [word]
+    Adds a word to the profanity filter
+unfilter_word [word]
+    Removes a word from the profanity filter
 ```

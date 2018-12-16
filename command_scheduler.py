@@ -2,6 +2,7 @@ from modules.rss_checker import RSSChecker
 
 import asyncio
 from contextlib import suppress
+import logging as log
 
 class Scheduler(RSSChecker):
     def __init__(self, client, *args, **kwargs):
@@ -32,5 +33,8 @@ class Scheduler(RSSChecker):
     async def run_task(self, taskid):
         func, args, kwargs = self.task_func[taskid]
         while True:
-            await func(*args, **kwargs)
+            try:
+                await func(*args, **kwargs)
+            except Exception as e:
+                log.warn("error in {}: ".format(taskid) + str(e))
             await asyncio.sleep(self.task_wait[taskid])

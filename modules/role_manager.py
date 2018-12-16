@@ -48,7 +48,7 @@ class RoleManager(Permissions):
             log.warn("You must set the member and role ids on {} before auto-roleing can work!"
                 .format(serverid))
             return
-            
+        
         curtime = datetime.datetime.utcnow()
         
         server = self.client.get_server(serverid)
@@ -69,9 +69,10 @@ class RoleManager(Permissions):
             # Promote members to the Buds role, but only if they're not on probation
             warnings = self.get_warnings(member.id, False)
             if warnings["probation"]:
-                probation_start = datetime.datetime.fromisoformat(warnings["since"])
+                probation_start = datetime.datetime.strptime(warnings["since"], "%Y-%m-%dT%H:%M:%S.%f")
                 if probation_start + member_timelimit < curtime:
                     # Probation is up, add them back to Bud status
+                    log.warn("removing probation")
                     await self.client.add_roles(member, member_role)
                     del warnings["since"]
                     warnings["probation"] = False
@@ -83,7 +84,7 @@ class RoleManager(Permissions):
                 
             elif member.joined_at + member_timelimit < curtime:
                 if previous_role in member.roles and member_role not in member.roles:    
-                    log.debug(str(member)+": "+str(member.joined_at)+" | "+str(curtime)+" | "+str(member.joined_at+timelimit))
+                    log.debug(str(member)+": "+str(member.joined_at)+" | "+str(curtime)+" | "+str(member.joined_at+member_timelimit))
                     try:
                         await self.client.add_roles(member, member_role)
                         log.info("[SUCCESS] Changing role of "+str(member)+" succeeded")
@@ -165,7 +166,7 @@ class RoleManager(Permissions):
                 response = "User {} has {} warnings.".format(self.user_format(member), warnings["warnings"])
                 if warnings["probation"]:
                     # Parse the "since" field and convert to a nice, readable time
-                    formatted_time = (datetime.datetime.fromisoformat(warnings["since"])
+                    formatted_time = (datetime.datetime.strptime(warnings["since"], "%Y-%m-%dT%H:%M:%S.%f")
                             .strftime("%I:%M %p on %b %d, %Y"))
                     response += " They have been on probation since {}.".format(formatted_time)
                 return response
@@ -193,7 +194,7 @@ class RoleManager(Permissions):
             warnings = self.get_warnings(member.id)
             if warnings["warnings"] == 0: warnings["warnings"] = 1
             warnings["probation"] = True
-            warnings["since"] = datetime.datetime.utcnow().isoformat()
+            warnings["since"] = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f")
             self.warnings[member.id] = warnings
 
             # Remove the user's "Buds" role.

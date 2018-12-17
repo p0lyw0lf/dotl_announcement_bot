@@ -5,8 +5,14 @@ These commands focus on mostly administrative stuff.
 
 Commands:
 ```
-channel_info
+[] = required
+{} = optional
+channel_info [channel_tag]
+    Gets debugging information about a channel tagged like #channel_name
 my_roles
-restrict_command
-admin_role
+    Gets debugging information about the roles of the user who runs the command
+restrict_command [command]
+    Restricts usage of a command to only people with the admin role, specified by the below command
+admin_role [role_id]
+    Sets the admin role for a server. A role id can be found by an administrator running my_roles
 ```

@@ -70,8 +70,8 @@ bot.schedule_periodic(
     bot.check_roles,
     (
         "368564065733312523", # server id
-        "387319441865703424", # new role id
-        datetime.timedelta(weeks=2)
+        datetime.timedelta(weeks=2), # time to become a member
+        datetime.timedelta(days=1) # time to get unmuted
     ),
     {},
     1 * 24 * 60 * 60, # 1 day

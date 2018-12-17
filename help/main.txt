@@ -8,9 +8,10 @@ Help sections:
 **Dice**: `help dice`
 **Memes**: `help memes`
 **Profanity Filter**: `help filter`
+**Probation**: `help probation`
 **RSS Feeds**: `help rss`
 **Utility**: `help util`
 
-**Help with any command**: `help command [command name]`
+**Help with certain commands**: `help command [command name]`
 
 **About DotL Bud**: `help about`

@@ -1,0 +1,25 @@
+**Probation help**
+
+On the DotL discord server, we have system in place to keep track of warnings, how many times a user has egregiously broken the server rules.
+These warnings can be given or removed at the discretion of server moderators, and once a user has accumulated too many, they are put on probation or banned.
+
+Probation entails being muted for 1 day, and a removal of the Bud role for 2 weeks. This punishment should not be taken lightly.
+
+Commands:
+```
+[] = required
+{} = optional
+[user] arguments can be specified by an @mention, a username, or a user id
+probation [user]
+    Puts a user on probation, and gives them a warning if they don't have any already
+warn [user]
+    Increments the number of warnings a user has
+unwarn [user]
+    Decrements the number of warnings a user has (can't go lower than zero)
+warninfo {user}
+    Gets the number of warnings and probation status for the user calling the command, or a specified user.
+member_role [role_id]
+    Sets the role for people not on probation, aka the Bud role
+muted_role [role_id]
+    Sets the role for muted probation users
+```

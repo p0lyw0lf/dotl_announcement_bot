@@ -2,7 +2,7 @@ from .variables import VariableCommands
 from utils import safe_int
 from random import randint
 
-DICE_LIST = ['2', '3', '4']
+DICE_LIST = ['2', '3', '4', '6', '8', '10', '12', '16', '20']
 
 class DiceCommands(VariableCommands):
     def __init__(self, client, *args, **kwargs):

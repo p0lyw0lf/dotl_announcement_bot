@@ -3,6 +3,7 @@ from modules.rss_checker import RSSChecker
 import asyncio
 from contextlib import suppress
 import logging as log
+from traceback import extract_tb
 
 class Scheduler(RSSChecker):
     def __init__(self, client, *args, **kwargs):
@@ -37,4 +38,5 @@ class Scheduler(RSSChecker):
                 await func(*args, **kwargs)
             except Exception as e:
                 log.warn("error in {}: ".format(taskid) + str(e))
+                log.warn("traceback: {}".format(extract_tb(e.__traceback__)))
             await asyncio.sleep(self.task_wait[taskid])

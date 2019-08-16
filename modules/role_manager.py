@@ -76,6 +76,7 @@ class RoleManager(Permissions):
                     await self.client.add_roles(member, member_role)
                     del warnings["since"]
                     warnings["probation"] = False
+                    log.info(str(member))
                     self.warnings[member.id] = warnings
                 
                 if probation_start + unmuted_timelimit < curtime:

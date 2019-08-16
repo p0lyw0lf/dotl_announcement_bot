@@ -12,6 +12,8 @@ class MiscCommands(Shell):
                 {"args": ["message", "channel"], "func": self.get_channel_info},
             "my_roles":
                 {"args": ["server", "user"], "func": self.get_roles},
+            "commit_dbs": 
+                {"args": [], "func": self.commit_dbs_command}, 
             "filter_word":
                 {"args": ["str"], "func": self.filter_word},
             "unfilter_word":
@@ -44,6 +46,10 @@ class MiscCommands(Shell):
             return out
         else:
             return "You have no roles"
+    
+    async def commit_dbs_command(self, *args):
+        await self.commit_dbs()
+        return "Short-term memory put into long-term!"
 
     async def filter_word(self, word=None, *args):
         if word is None: return "You need to specify a word!"

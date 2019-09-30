@@ -51,12 +51,12 @@ class RoleManager(Permissions):
         
         curtime = datetime.datetime.utcnow()
         
-        server = self.client.get_server(serverid)
+        server = self.client.get_guild(serverid)
         if server.large:
             await self.client.request_offline_members(server)
             
-        member_role = discord.utils.get(server.roles, id=self.permdb[serverid, 'member_role'])
-        muted_role = discord.utils.get(server.roles, id=self.permdb[serverid, 'muted_role'])
+        member_role = discord.utils.get(server.roles, id=int(self.permdb[serverid, 'member_role']))
+        muted_role = discord.utils.get(server.roles, id=int(self.permdb[serverid, 'muted_role']))
         
         # removing this func for now
         #if previous_roleid is None:
@@ -199,11 +199,11 @@ class RoleManager(Permissions):
             self.warnings[member.id] = warnings
 
             # Remove the user's "Buds" role.
-            buds_role = discord.utils.get(server.roles, id=self.permdb[server.id, 'member_role'])
+            buds_role = discord.utils.get(server.roles, id=int(self.permdb[server.id, 'member_role']))
             await self.client.remove_roles(member, buds_role)
 
             # Prevent them from posting for 24 hours.
-            muted_role = discord.utils.get(server.roles, id=self.permdb[server.id, 'muted_role'])
+            muted_role = discord.utils.get(server.roles, id=int(self.permdb[server.id, 'muted_role']))
             await self.client.add_roles(member, muted_role)
 
             # Notify the caller that the user has been put on probation

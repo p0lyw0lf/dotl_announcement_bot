@@ -1,6 +1,7 @@
 import traceback
 from discord import Forbidden
 from discord.errors import NotFound
+import discord
 import asyncio
 import sys
 
@@ -79,7 +80,7 @@ class Parser(MiscCommands, HelpCommands, DiceCommands, MemeCommands, RoleManager
         wait_time = safe_float(self.db[user.id, 'delete_response_time'])
         await asyncio.sleep(wait_time)
         try:
-            await self.client.delete_message(message)
+            await message.delete()
         except (Forbidden, NotFound):
             pass
 
@@ -87,12 +88,12 @@ class Parser(MiscCommands, HelpCommands, DiceCommands, MemeCommands, RoleManager
         try:
             
             message = message_obj.content.split('\n')[0]
-            server = message_obj.server
+            server = message_obj.guild
             channel = message_obj.channel
             user = message_obj.author
             
             if message.startswith(self.special_begin) or \
-               (channel.is_private and user.id != self.client.user.id):
+               (channel.type == discord.ChannelType.private and user.id != self.client.user.id):
 
                 command, tokens = self.full_tokenize(message)
                 

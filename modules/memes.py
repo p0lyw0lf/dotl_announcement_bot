@@ -25,7 +25,7 @@ class MemeCommands(VariableCommands):
         })
         
     async def register_all_memes(self):
-        for server in self.client.servers:
+        for server in self.client.guilds:
             all_memes = ent2list(self.db["memes_of", server.id])
             for meme in all_memes:
                 await self.register_meme(server, meme, do_update_db=False)

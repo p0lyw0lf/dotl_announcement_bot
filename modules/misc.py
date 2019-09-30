@@ -79,6 +79,8 @@ class MiscCommands(Shell):
 
     # Useless because commands containing bad words are deleted before
     # they can be parsed. Will add back once I change that
+    # SUPER LATE EDIT: lol this was added back a while ago, just saw this
+    # comment as I was refactoring the code for the discord.py 1.0 release
     async def unfilter_word(self, word=None, *args):
         if word is None: return "You need to specify a word!"
 

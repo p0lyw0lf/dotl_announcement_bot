@@ -4,14 +4,15 @@ import json
 
 class Database(object):
     def __init__(self, filename, global_keyword):
-        self.file_dir = filename + '/'
-        self.global_keyword = global_keyword
+        self.file_dir = str(filename) + '/'
+        self.global_keyword = str(global_keyword)
 
     def __getitem__(self, key):
-        for part in key:
+        for unparsed_part in key:
+            part = str(unparsed_part)
             if '..' in part or '/' in part:
                 return ''
-        filename = os.path.join(self.file_dir, *key)
+        filename = os.path.join(self.file_dir, *map(str, key))
 
         try:
             directory = os.path.dirname(filename)
@@ -36,10 +37,11 @@ class Database(object):
         return value
 
     def __setitem__(self, key, value):
-        for part in key:
+        for unparsed_part in key:
+            part = str(unparsed_part)
             if '.' in part or '/' in part:
                 return ''
-        filename = os.path.join(self.file_dir, *key)
+        filename = os.path.join(self.file_dir, *map(str, key))
         directory = os.path.dirname(filename)
         if not os.path.exists(directory):
             os.makedirs(directory)

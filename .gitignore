@@ -23,6 +23,9 @@ $RECYCLE.BIN/
 *.pyc
 __pycache__/
 
+# The virtual environment
+venv/
+
 # Oauth2 tokens
 oauth2.tok
 oauth2.tok.bak

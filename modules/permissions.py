@@ -46,7 +46,7 @@ class Permissions(Shell):
         if not admin_role_id or \
            not isinstance(user, discord.Member): return True
         # Is the user an admin?
-        if admin_role_id in {role.id for role in user.roles}: return True
+        if admin_role_id in {str(role.id) for role in user.roles}: return True
         # If the command restricted?
         if not self.is_no(self.permdb[server.id, 'restricted', command.lower()]):
             return False

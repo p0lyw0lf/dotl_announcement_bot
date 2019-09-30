@@ -4,7 +4,7 @@ from discord import Embed
 class Shell:
     def __init__(self, client, *args, **kwargs):
         super(Shell, self).__init__(self, client, *args, **kwargs)
-        self.admins = {'172823011999744001'}
+        self.admins = {172823011999744001,}
 
         self.special_begin = 'b!'
         self.tokenizing_regex = re.compile("([^\s\"']+|\"([^\"]*)\"|'([^']*)')")
@@ -82,17 +82,17 @@ class Shell:
 
     async def send_message(self, response, user, channel):
         output = self.format_embed(user, response)
-        return await self.client.send_message(channel, embed=output)
+        return await channel.send(embed=output)
 
     async def send_simple_message(self, response, channel):
-        return await self.client.send_message(channel, response)
+        return await channel.send(response)
 
     async def update_message(self, response, message_obj, user, channel):
         output = self.format_embed(user, response)
-        return await self.client.edit_message(message_obj, embed=output)
+        return await message_obj.edit(embed=output)
 
     async def update_simple_message(self, response, message_obj, channel):
-        return await self.client.edit_message(message_obj, response)
+        return await message_obj.edit(response)
 
     async def commit_dbs(self):
         for db in self.databases:

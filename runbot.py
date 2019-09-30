@@ -23,7 +23,7 @@ bot.schedule_periodic(
     bot.check_rss, 
     (
         "http://www.daughterofthelilies.com/rss.php",
-        "371963209508192276",
+        371963209508192276,
         "Hey everyone! A new page just went up: %%%. Enjoy :3",
         "dotl"
     ),
@@ -36,7 +36,7 @@ bot.schedule_periodic(
     bot.check_rss, 
     (
         "http://bludragongal.tumblr.com/rss",
-        "371963443873447947",
+        371963443873447947,
         "Hey everyone! Meg just posted to tumblr: %%%. Go check it out!",
         "meg"
     ),
@@ -49,7 +49,7 @@ bot.schedule_periodic(
     bot.check_rss, 
     (
         "http://yokoboo.tumblr.com/rss",
-        "371963443873447947",
+        371963443873447947,
         "Hey everyone! Yoko just posted to tumblr: %%%. Go check it out!",
         "yoko"
     ), 
@@ -69,7 +69,7 @@ bot.schedule_periodic(
 bot.schedule_periodic(
     bot.check_roles,
     (
-        "368564065733312523", # server id
+        368564065733312523, # server id
         datetime.timedelta(weeks=2), # time to become a member
         datetime.timedelta(days=1) # time to get unmuted
     ),
@@ -81,7 +81,7 @@ bot.schedule_periodic(
 bot.schedule_periodic(
     bot.delete_previous_pins,
     (
-        "371963209508192276",
+        371963209508192276,
         datetime.timedelta(weeks=8),
     ),
     {},
@@ -98,31 +98,34 @@ async def on_ready():
     log.info(client.user.name)
     log.info(client.user.id)
     log.info('------')
-    await bot.start_task('dotl_rss')
-    await bot.start_task('meg_rss')
-    await bot.start_task('yoko_rss')
-    await bot.start_task('delete_previous_pins')
+    #await bot.start_task('dotl_rss')
+    #await bot.start_task('meg_rss')
+    #await bot.start_task('yoko_rss')
+    #await bot.start_task('delete_previous_pins')
     await bot.start_task('commit_dbs')
-    await bot.start_task('check_roles')
+    #await bot.start_task('check_roles')
     await bot.register_all_memes()
     log.info("Started all tasks")
-    await bot.client.change_presence(game=discord.Game(name=bot.special_begin+'help'))
+    await bot.client.change_presence(activity=discord.Game(name=bot.special_begin+'help'))
     log.info("Started up successfully")
 
 @client.event
 async def on_message(message):
     # REAALY would prefer not to do this b/c people can get
     # around filter using commands that have effects inside them but idk
-    command, response = await bot.parse(message)
+    try:
+        command, response = await bot.parse(message)
+    except ValueError:
+        log.err("The message \"{}\" broke the bot!".format(message))
+        command, response = None, None
  
     filtered = bot.filter(message.content)
     if filtered and command not in unfiltered_commands:
         try:
-            await client.delete_message(message)
+            await message.delete()
             # we don't want to hit the limit
             for x in range(0, len(filtered), 2048):
-                await client.send_message(
-                    message.channel,
+                await message.channel.send(
                     embed=bot.format_embed(message.author, filtered[x:x+2048])
                 )
         except (Forbidden, NotFound) as err:
@@ -142,23 +145,23 @@ async def on_message(message):
     if response is not None:
         if bot.is_yes(bot.db[message.author.id, "delete_command"]):
             try:
-                await client.delete_message(message)
+                await message.delete()
             except (Forbidden, NotFound):
                 pass
 
-        await client.send_typing(message.channel)
+        await message.channel.trigger_typing()
         
-        if isinstance(message.channel, discord.PrivateChannel) and \
+        if isinstance(message.channel, discord.abc.PrivateChannel) and \
            type(response) == str:
-            rspmsg = await client.send_message(message.channel, response)
+            rspmsg = await message.channel.send(response)
         else:
             output = bot.format_embed(message.author, response)
             if isinstance(output, list):
                 rspmsg = []
                 for output_obj in output:
-                    rspmsg.append(await client.send_message(message.channel, embed=output_obj))
+                    rspmsg.append(await message.channel.send(embed=output_obj))
             else:
-                rspmsg = await client.send_message(message.channel, embed=output)
+                rspmsg = await message.channel.send(embed=output)
 
         log.debug("Sent response {0} to author {1} ({2})"\
               .format(response, message.author.name, message.author.id))

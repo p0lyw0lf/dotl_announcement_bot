@@ -1,5 +1,6 @@
 from .shell import Shell
 from doclite import InMemDatabase
+from discord import ChannelType
 
 
 class HelpCommands(Shell):
@@ -20,8 +21,8 @@ class HelpCommands(Shell):
         if data == '':
             return "Sorry, help for {} cannot be found".format(' '.join(path))
 
-        if channel.is_private:
+        if channel.type == ChannelType.private:
             return data
         else:
-            await self.client.send_message(user, data)
+            await user.send(data)
             return "A PM has been sent to you with help"

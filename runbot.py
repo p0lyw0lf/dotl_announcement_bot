@@ -18,16 +18,19 @@ class Bot(Parser, Scheduler, ProfanityFilter):
     def __init__(self, client, *args, **kwargs):
         super(Bot, self).__init__(client, *args, **kwargs)
 
+
+PAGEUPDATE_ROLE = 636331098733019166
+
 bot = Bot(client)
 bot.schedule_periodic(
     bot.check_rss, 
     (
         "http://www.daughterofthelilies.com/rss.php",
         371963209508192276,
-        "Hey everyone! A new page just went up: %%%. Enjoy :3",
+        "Hey everyone %mention%! A new page just went up: %page%. Enjoy :3",
         "dotl"
     ),
-    {'pin_message': True},
+    {'pin_message': True, 'mention_role': PAGEUPDATE_ROLE},
     10 * 60, # 10 min
     'dotl_rss'
 )
@@ -37,7 +40,7 @@ bot.schedule_periodic(
     (
         "http://bludragongal.tumblr.com/rss",
         371963443873447947,
-        "Hey everyone! Meg just posted to tumblr: %%%. Go check it out!",
+        "Hey everyone! Meg just posted to tumblr: %page%. Go check it out!",
         "meg"
     ),
     {},
@@ -50,7 +53,7 @@ bot.schedule_periodic(
     (
         "http://yokoboo.tumblr.com/rss",
         371963443873447947,
-        "Hey everyone! Yoko just posted to tumblr: %%%. Go check it out!",
+        "Hey everyone! Yoko just posted to tumblr: %page%. Go check it out!",
         "yoko"
     ), 
     {},
@@ -98,12 +101,12 @@ async def on_ready():
     log.info(client.user.name)
     log.info(client.user.id)
     log.info('------')
-    #await bot.start_task('dotl_rss')
-    #await bot.start_task('meg_rss')
-    #await bot.start_task('yoko_rss')
-    #await bot.start_task('delete_previous_pins')
+    await bot.start_task('dotl_rss')
+    await bot.start_task('meg_rss')
+    await bot.start_task('yoko_rss')
+    await bot.start_task('delete_previous_pins')
     await bot.start_task('commit_dbs')
-    #await bot.start_task('check_roles')
+    await bot.start_task('check_roles')
     await bot.register_all_memes()
     log.info("Started all tasks")
     await bot.client.change_presence(activity=discord.Game(name=bot.special_begin+'help'))
@@ -116,7 +119,7 @@ async def on_message(message):
     try:
         command, response = await bot.parse(message)
     except ValueError:
-        log.err("The message \"{}\" broke the bot!".format(message))
+        log.error("The message \"{}\" broke the bot!".format(message))
         command, response = None, None
  
     filtered = bot.filter(message.content)

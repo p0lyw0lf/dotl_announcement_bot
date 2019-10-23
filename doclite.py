@@ -1,6 +1,7 @@
 import os
 import threading
 import json
+import logging as log
 
 class Database(object):
     def __init__(self, filename, global_keyword):

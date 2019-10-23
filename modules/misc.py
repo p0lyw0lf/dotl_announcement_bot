@@ -1,6 +1,7 @@
 from .shell import Shell
 
 import discord
+from discord import ChannelType
 import logging as log
 
 class MiscCommands(Shell):
@@ -27,7 +28,7 @@ class MiscCommands(Shell):
         })
 
     async def get_channel_info(self, message, channel, *args):
-        if not channel.is_private:
+        if channel.type != ChannelType.private:
             out = dict()
             for mention in message.channel_mentions:
                 out[mention.name] = "ID: {}\nTopic: {}".format(mention.id, mention.topic)

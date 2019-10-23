@@ -43,8 +43,8 @@ class RoleManager(Permissions):
         
         
     async def check_roles(self, serverid, member_timelimit, unmuted_timelimit):
-        if self.permdb[serverid, 'member_role'] is None or \
-            self.permdb[serverid, 'muted_role'] is None:
+        if self.permdb[str(serverid), 'member_role'] is None or \
+            self.permdb[str(serverid), 'muted_role'] is None:
             log.warn("You must set the member and role ids on {} before auto-roleing can work!"
                 .format(serverid))
             return
@@ -55,8 +55,8 @@ class RoleManager(Permissions):
         if server.large:
             await self.client.request_offline_members(server)
             
-        member_role = discord.utils.get(server.roles, id=int(self.permdb[serverid, 'member_role']))
-        muted_role = discord.utils.get(server.roles, id=int(self.permdb[serverid, 'muted_role']))
+        member_role = discord.utils.get(server.roles, id=int(self.permdb[str(serverid), 'member_role']))
+        muted_role = discord.utils.get(server.roles, id=int(self.permdb[str(serverid), 'muted_role']))
         
         # removing this func for now
         #if previous_roleid is None:
@@ -199,11 +199,11 @@ class RoleManager(Permissions):
             self.warnings[member.id] = warnings
 
             # Remove the user's "Buds" role.
-            buds_role = discord.utils.get(server.roles, id=int(self.permdb[server.id, 'member_role']))
+            buds_role = discord.utils.get(server.roles, id=int(self.permdb[str(server.id), 'member_role']))
             await self.client.remove_roles(member, buds_role)
 
             # Prevent them from posting for 24 hours.
-            muted_role = discord.utils.get(server.roles, id=int(self.permdb[server.id, 'muted_role']))
+            muted_role = discord.utils.get(server.roles, id=int(self.permdb[str(server.id), 'muted_role']))
             await self.client.add_roles(member, muted_role)
 
             # Notify the caller that the user has been put on probation
@@ -216,14 +216,14 @@ class RoleManager(Permissions):
     async def set_member_role(self, server, member_role_id=None):
         if member_role_id is None: return "You need to specify a role id."
 
-        self.permdb[server.id, 'member_role'] = str(member_role_id)
+        self.permdb[str(server.id), 'member_role'] = str(member_role_id)
 
         return "Set role {} as the member role".format(member_role_id)
         
     async def set_muted_role(self, server, muted_role_id=None):
         if muted_role_id is None: return "You need to specify a role id."
 
-        self.permdb[server.id, 'muted_role'] = str(muted_role_id)
+        self.permdb[str(server.id), 'muted_role'] = str(muted_role_id)
 
         return "Set role {} as the muted role".format(muted_role_id)
 

@@ -54,7 +54,7 @@ class RSSChecker(VariableCommands):
         # Filter so we only unpin messages we sent cutoff_age ago
         # Could compare direct user objects, but I don't trust that...
         my_old_pins = filter(
-            lambda p: (p.timestamp + cutoff_age < curtime) and \
+            lambda p: (p.created_at + cutoff_age < curtime) and \
             (p.author.id == self.client.user.id),
             pins
         )

@@ -26,7 +26,7 @@ class MemeCommands(VariableCommands):
         
     async def register_all_memes(self):
         for server in self.client.guilds:
-            all_memes = ent2list(self.db["memes_of", server.id])
+            all_memes = ent2list(self.db["memes_of", str(server.id)])
             for meme in all_memes:
                 await self.register_meme(server, meme, do_update_db=False)
         
@@ -43,9 +43,9 @@ class MemeCommands(VariableCommands):
         })
         
         if do_update_db:
-            all_memes = ent2list(self.db["memes_of", server.id], exclude={meme})
+            all_memes = ent2list(self.db["memes_of", str(server.id)], exclude={meme})
             all_memes.append(meme)
-            self.db["memes_of", server.id] = list2ent(all_memes)
+            self.db["memes_of", str(server.id)] = list2ent(all_memes)
             
         return "Haha yes now I can \"{}\" with all my fellow memesters".format(meme)
         
@@ -54,11 +54,11 @@ class MemeCommands(VariableCommands):
     
         async def inner_meme(server, index=None):
         
-            all_memes = ent2list(self.db["memes_of", server.id])
+            all_memes = ent2list(self.db["memes_of", str(server.id)])
             if meme not in all_memes:
                 return "\"{}\" is not a meme on this server".format(meme)
             
-            all_links = ent2list(self.db["memes_in", server.id, meme])
+            all_links = ent2list(self.db["memes_in", str(server.id), meme])
             if len(all_links) == 0:
                 return "I don't have any images for \"{}\"".format(meme)
                 
@@ -95,19 +95,19 @@ class MemeCommands(VariableCommands):
         if not self.validate_url(link):
             return "I don't think that's a valid link..."
             
-        all_links = ent2list(self.db["memes_in", server.id, meme], exclude={link})
+        all_links = ent2list(self.db["memes_in", str(server.id), meme], exclude={link})
         all_links.append(link)
         self.db["memes_in", server.id, meme] = list2ent(all_links)
         
         return "Wow that's a cool \"{}\" meme".format(meme)
         
     async def show_all_memes(self, server):
-        all_memes = ent2list(self.db["memes_of", server.id])
+        all_memes = ent2list(self.db["memes_of", str(server.id)])
         
         if all_memes:
             meme_dict = dict()
             for meme in all_memes:
-                meme_dict[meme] = "{} images".format(len(ent2list(self.db["memes_in", server.id, meme])))
+                meme_dict[meme] = "{} images".format(len(ent2list(self.db["memes_in", str(server.id), meme])))
             return meme_dict
             
         else:
@@ -120,7 +120,7 @@ class MemeCommands(VariableCommands):
         if meme not in self.commands:
             return "I don't know how to do a \"{}\"".format(meme)
     
-        all_links = ent2list(self.db["memes_in", server.id, meme])
+        all_links = ent2list(self.db["memes_in", str(server.id), meme])
         
         if all_links:
             link_dict = dict()
@@ -137,16 +137,16 @@ class MemeCommands(VariableCommands):
         if meme not in self.commands:
             return "I don't know how to do a \"{}\"".format(meme)
             
-        all_memes = ent2list(self.db["memes_of", server.id])
+        all_memes = ent2list(self.db["memes_of", str(server.id)])
         
         if meme not in all_memes:
             return "\"{}\" is not a meme on this server".format(meme)
             
         del self.commands[meme]
         all_memes.remove(meme)
-        self.db["memes_of", server.id] = list2ent(all_memes)
-        self.db["memes_in", server.id, meme] = ""
-        del self.db["memes_in", server.id, meme]
+        self.db["memes_of", str(server.id)] = list2ent(all_memes)
+        self.db["memes_in", str(server.id), meme] = ""
+        del self.db["memes_in", str(server.id), meme]
         
         return "I did do a delete of \"{}\"".format(meme)
     
@@ -157,7 +157,7 @@ class MemeCommands(VariableCommands):
         if meme not in self.commands:
             return "I don't know how to do a \"{}\"".format(meme)
             
-        all_memes = ent2list(self.db["memes_of", server.id])
+        all_memes = ent2list(self.db["memes_of", str(server.id)])
         
         if meme not in all_memes:
             return "\"{}\" is not a meme on this server".format(meme)
@@ -165,12 +165,12 @@ class MemeCommands(VariableCommands):
         if index is None:
             return "I need to know which link to remove"
             
-        all_links = ent2list(self.db["memes_in", server.id, meme])
+        all_links = ent2list(self.db["memes_in", str(server.id), meme])
         
         if index < 1 or index > len(all_links):
             return "I only have {} links for that meme!".format(len(all_links))
             
         all_links = [all_links[x] for x in range(len(all_links)) if x+1 != index]
-        self.db["memes_in", server.id, meme] = list2ent(all_links)
+        self.db["memes_in", str(server.id), meme] = list2ent(all_links)
         
         return "Link {} removed from \"{}\" list!".format(index, meme)

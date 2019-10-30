@@ -110,7 +110,7 @@ class RoleManager(Permissions):
             # send a PM to the user that they've been warned
             member_pm = ("You have been issued a warning. You have {} warnings. Play nice or else."
                     .format(warnings["warnings"]))
-            await self.client.send_message(member, member_pm)
+            await member.send(member_pm)
 
             # report back to the caller how many warnings this person has
             response = ("User {} has been warned and now has {} warnings."

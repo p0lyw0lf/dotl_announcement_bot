@@ -73,7 +73,7 @@ class RoleManager(Permissions):
                 if probation_start + member_timelimit < curtime:
                     # Probation is up, add them back to Bud status
                     log.warn("removing probation")
-                    await self.client.add_roles(member, member_role)
+                    await member.add_roles(member_role)
                     del warnings["since"]
                     warnings["probation"] = False
                     log.info(str(member))
@@ -87,7 +87,7 @@ class RoleManager(Permissions):
                 if previous_role in member.roles and member_role not in member.roles:    
                     log.debug(str(member)+": "+str(member.joined_at)+" | "+str(curtime)+" | "+str(member.joined_at+member_timelimit))
                     try:
-                        await self.client.add_roles(member, member_role)
+                        await member.add_roles(member_role)
                         log.info("[SUCCESS] Changing role of "+str(member)+" succeeded")
                     except (Forbidden, HTTPException) as e:
                         log.info("[FAILURE] Changing role of "+str(member)+" failed")
@@ -200,11 +200,11 @@ class RoleManager(Permissions):
 
             # Remove the user's "Buds" role.
             buds_role = discord.utils.get(server.roles, id=int(self.permdb[str(server.id), 'member_role']))
-            await self.client.remove_roles(member, buds_role)
+            await member.remove_roles(buds_role)
 
             # Prevent them from posting for 24 hours.
             muted_role = discord.utils.get(server.roles, id=int(self.permdb[str(server.id), 'muted_role']))
-            await self.client.add_roles(member, muted_role)
+            await member.add_roles(muted_role)
 
             # Notify the caller that the user has been put on probation
             response = "User {} is now on probation.".format(self.user_format(member))

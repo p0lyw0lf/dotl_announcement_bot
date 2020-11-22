@@ -30,9 +30,9 @@ class RoleManager(Permissions):
                 "args": ["server", "user", "mention", "str"],
                 "func": self.warning_info,
             },
-            
+
             "member_role": {
-                "args": ["server", "int"], 
+                "args": ["server", "int"],
                 "func": self.set_member_role
             },
             "muted_role": {
@@ -40,24 +40,26 @@ class RoleManager(Permissions):
                 "func": self.set_muted_role
             },
         })
-        
-        
+
+
     async def check_roles(self, serverid, member_timelimit, unmuted_timelimit):
         if self.permdb[str(serverid), 'member_role'] is None or \
             self.permdb[str(serverid), 'muted_role'] is None:
             log.warn("You must set the member and role ids on {} before auto-roleing can work!"
                 .format(serverid))
             return
-        
+
         curtime = datetime.datetime.utcnow()
-        
+
         server = self.client.get_guild(serverid)
         if server.large:
-            await self.client.request_offline_members(server)
-            
+            # This requests all the members in the server to be stored locally,
+            # which can be very slow
+            await server.chunk()
+
         member_role = discord.utils.get(server.roles, id=int(self.permdb[str(serverid), 'member_role']))
         muted_role = discord.utils.get(server.roles, id=int(self.permdb[str(serverid), 'muted_role']))
-        
+
         # removing this func for now
         #if previous_roleid is None:
         #    previous_role = server.default_role

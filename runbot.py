@@ -3,7 +3,7 @@ import traceback
 import logging as log
 
 import discord
-from discord import Forbidden
+from discord import Forbidden, Intents
 from discord.errors import NotFound
 import asyncio
 
@@ -11,7 +11,6 @@ from command_parser import Parser
 from command_scheduler import Scheduler
 from profanity_filter import ProfanityFilter
 
-client = discord.Client()
 log.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=log.INFO)
 
 class Bot(Parser, Scheduler, ProfanityFilter):
@@ -21,9 +20,21 @@ class Bot(Parser, Scheduler, ProfanityFilter):
 
 PAGEUPDATE_ROLE = 636331098733019166
 
+client = discord.Client(
+    intents=Intents(
+        guilds=True,
+        members=True,
+        bans=True,
+        emojis=True,
+        messages=True,
+        reactions=True,
+        typing=True,
+    ),
+)
+
 bot = Bot(client)
 bot.schedule_periodic(
-    bot.check_rss, 
+    bot.check_rss,
     (
         "http://www.daughterofthelilies.com/rss.php",
         371963209508192276,
@@ -36,7 +47,7 @@ bot.schedule_periodic(
 )
 
 bot.schedule_periodic(
-    bot.check_rss, 
+    bot.check_rss,
     (
         "http://bludragongal.tumblr.com/rss",
         371963443873447947,
@@ -49,13 +60,13 @@ bot.schedule_periodic(
 )
 
 bot.schedule_periodic(
-    bot.check_rss, 
+    bot.check_rss,
     (
         "http://yokoboo.tumblr.com/rss",
         371963443873447947,
         "Hey everyone! Yoko just posted to tumblr: %page%. Go check it out!",
         "yoko"
-    ), 
+    ),
     {},
     10 * 60, # 10 min
     'yoko_rss'
@@ -121,7 +132,7 @@ async def on_message(message):
     except ValueError:
         log.error("The message \"{}\" broke the bot!".format(message))
         command, response = None, None
- 
+
     filtered = bot.filter(message.content)
     if filtered and command not in unfiltered_commands:
         try:
@@ -138,14 +149,14 @@ async def on_message(message):
             pass
 
         return
-        
+
     if discord.utils.find(lambda user: user.id == client.user.id, message.mentions):
         if 'good' in message.content.lower():
             await bot.send_simple_message("Thank you!~", message.channel)
         if 'bad' in message.content.lower():
             await bot.send_simple_message(":(", message.channel)
-        
-    
+
+
     #print(message.channel.id, message.channel.name)
     if response is not None:
         if bot.is_yes(bot.db[message.author.id, "delete_command"]):
@@ -155,7 +166,7 @@ async def on_message(message):
                 pass
 
         await message.channel.trigger_typing()
-        
+
         if isinstance(message.channel, discord.abc.PrivateChannel) and \
            type(response) == str:
             rspmsg = await message.channel.send(response)

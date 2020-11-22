@@ -28,7 +28,7 @@ venv/
 
 # Oauth2 tokens
 oauth2.tok
-oauth2.tok.bak
+oauth2.tok.*
 
 # Permissions
 perms/

@@ -26,6 +26,7 @@ class RSSChecker(VariableCommands):
         dbitem = ("last_link_"+tag,)
         # check announceable first, in case tag is added after it's posted
         if self.is_announceable(item) and item["link"] != self.db[dbitem]:
+            log.info("new: " + str(item["link"]) + " old: " + str(self.db[dbitem]))
             self.db[dbitem] = item["link"]
             channel_obj = self.client.get_channel(channel)
             

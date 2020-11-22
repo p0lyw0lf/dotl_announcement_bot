@@ -139,9 +139,11 @@ async def on_message(message):
 
         return
         
-    if discord.utils.find(lambda user: user.id == client.user.id, message.mentions) and\
-    'good' in message.content.lower():
-        await bot.send_simple_message("Thank you!~", message.channel)
+    if discord.utils.find(lambda user: user.id == client.user.id, message.mentions):
+        if 'good' in message.content.lower():
+            await bot.send_simple_message("Thank you!~", message.channel)
+        if 'bad' in message.content.lower():
+            await bot.send_simple_message(":(", message.channel)
         
     
     #print(message.channel.id, message.channel.name)
